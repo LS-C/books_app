@@ -1,2 +1,16 @@
 
-<h2>Welcome <%=@author.email%></h2>
+<h2>Welcome <%=@author.first_name%></h2>
+
+
+
+<button id="add-book">Add Book Script</button>
+<div id="book-form">
+
+</div>
+
+
+<script type="text/javascript">
+    $('#add-book').click(function() {
+        $('#book-form').append(`<%= escape_javascript render partial: 'books/form' %>`)
+    })
+</script>

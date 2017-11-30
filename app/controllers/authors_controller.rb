@@ -4,10 +4,16 @@ class AuthorsController < ApplicationController
 
     def index
         @authors = Author.all
+        @books = Book.all
     end
 
     def show
+        @book = Book.new
         @author = Author.find(params[:id])
+        respond_to do |format|
+            format.html { render :show }
+            format.json { render json: @author }
+        end
     end
 
     def create
@@ -17,7 +23,7 @@ class AuthorsController < ApplicationController
 
     private
     def author_params
-        params.require(:author).permit(:first_name, :last_name, :username, :email, :password, :password_confirmation )
+        params.require(:author).permit(:first_name, :last_name, :username, :email, :password, :password_confirmation)
     end
 
 

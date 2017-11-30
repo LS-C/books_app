@@ -4,10 +4,15 @@ Rails.application.routes.draw do
 
   # resources :publishing_companies
   # resources :books
-  resources :authors, only: [:show]
+  resources :authors  do
+    resources :books
+  end
 
+  resources :books
   root to: 'home#index'
-  get 'current_author', to: 'author#show'
+
+
+
 
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
