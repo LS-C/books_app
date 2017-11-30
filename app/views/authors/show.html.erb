@@ -15,6 +15,9 @@
 <script type="text/javascript">
     $('#add-book').on('click', renderForm)
 
+
+
+
 function renderForm() {
     $('#book-form').append(`<%= escape_javascript render partial: 'books/form' %>`)
             if (!$('#book-form').is(':empty')) {

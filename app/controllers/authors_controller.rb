@@ -8,8 +8,8 @@ class AuthorsController < ApplicationController
     end
 
     def show
-        @book = Book.new
         @author = Author.find(params[:id])
+        @book = Book.new
         respond_to do |format|
             format.html { render :show }
             format.json { render json: @author }
@@ -18,6 +18,12 @@ class AuthorsController < ApplicationController
 
     def create
         @author = Author.create(author_params)
+    end
+
+    def book_data
+        @author = Author.find(params[:id])
+        book = @author.books
+        render json: book
     end
 
 

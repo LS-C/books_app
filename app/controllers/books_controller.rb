@@ -21,8 +21,13 @@ class BooksController < ApplicationController
 
     def create
         @book = Book.create(book_params)
-        render json: @book
     end
+
+    def book_data
+        book = Book.find(params[:id])
+        render json: book
+    end
+
 
     private
     def book_params
