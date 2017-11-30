@@ -16,7 +16,12 @@
 $(function() {
 
 
-    $('form').submit(function(e) {
+    $('form').submit(submitForm)
+
+})
+
+
+function submitForm(e) {
         e.preventDefault()
         const id = $('#author-id').attr('data-id')
         console.log(id)
@@ -25,11 +30,7 @@ $(function() {
         posting.done(function(values) {
             getCurrentBooks()
         })
-    })
-
-})
-
-
+}
 
 function getCurrentBooks() {
     const id = $('#author-id').attr('data-id')
@@ -37,14 +38,8 @@ function getCurrentBooks() {
         const book = data["books"]
         const newBook = book[book.length-1]["title"]
         $("#new-books").append('<p>'+newBook+'</p>')
-
-        // const authorBooks = books.map(book => {
-        //     return '<p>'+book.title+'</p>'
-        // })
-        // authorBooks.forEach( book => {
-        //     $("#new-books").append(newBook)
-        // })
 })
+        $('#book-form').empty()
 }
 
 

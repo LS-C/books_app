@@ -26,10 +26,11 @@ $(function() {
 
 
 function renderForm() {
-    $('#book-form').append(`<%= escape_javascript render partial: 'books/form' %>`)
-            if (!$('#book-form').is(':empty')) {
-            $('#add-book').off('click', renderForm)
-        }
+    if (!$('#book-form').is(':empty')) {
+        $('#book-form').append(`<%= j render partial: 'books/form' %>`)
+    } else {
+        return false
+    }
 }
 
 
