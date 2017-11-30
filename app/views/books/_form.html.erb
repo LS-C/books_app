@@ -18,9 +18,17 @@
         console.log(id)
         const values = $(this).serialize()
         posting = $.post('/authors/'+id+'/books', values)
-        posting.done(function(values) {
-            console.log(values)
+        posting.done(function() {
+            getCurrentBooks()
         })
     })
+
+
+function getCurrentBooks() {
+    const id = $('#author-id').attr('data-id')
+    posting = $.getJSON('/authors/'+id+'/books', function(data) {
+        console.log(data)
+    })
+}
 
 </script>

@@ -3,14 +3,25 @@
 
 
 
-<button id="add-book">Add Book Script</button>
+<button id="add-book">Add A New Script</button>
 <div id="book-form">
+</div>
+
+<div id="authors-books">
 
 </div>
 
 
 <script type="text/javascript">
-    $('#add-book').click(function() {
-        $('#book-form').append(`<%= escape_javascript render partial: 'books/form' %>`)
-    })
+    $('#add-book').on('click', renderForm)
+
+function renderForm() {
+    $('#book-form').append(`<%= escape_javascript render partial: 'books/form' %>`)
+            if (!$('#book-form').is(':empty')) {
+            $('#add-book').off('click', renderForm)
+        }
+}
+
 </script>
+
+
