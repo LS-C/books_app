@@ -12,6 +12,10 @@
 <p id="author-id" data-id=<%=@author.id%>></div>
 
 <script type="text/javascript">
+
+$(function() {
+
+
     $('form').submit(function(e) {
         e.preventDefault()
         const id = $('#author-id').attr('data-id')
@@ -23,14 +27,26 @@
         })
     })
 
+})
+
+
 
 function getCurrentBooks() {
     const id = $('#author-id').attr('data-id')
-    console.log(id)
-    posting = $.getJSON('/authors/'+id+'author_books', function(data) {
-        console.log(data)
-        console.log('get current book function is running')
-    })
+    posting = $.getJSON('/authors/'+id+'book_data', function(data) {
+        const book = data["books"]
+        const newBook = book[book.length-1]["title"]
+        $("#new-books").append('<p>'+newBook+'</p>')
+
+        // const authorBooks = books.map(book => {
+        //     return '<p>'+book.title+'</p>'
+        // })
+        // authorBooks.forEach( book => {
+        //     $("#new-books").append(newBook)
+        // })
+})
 }
+
+
 
 </script>
