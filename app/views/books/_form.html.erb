@@ -1,4 +1,4 @@
-<%= form_for @book do |f| %>
+<%= form_with(model: @book) do |f| %>
     <%= f.label :title %>
     <%= f.text_field :title %>
     <%= f.label :category %>
@@ -7,16 +7,17 @@
     <%= f.text_field :description %>
     <%= f.hidden_field :author_id, value: @author.id %>
 
-    <%= f.submit %>
+    <%= f.submit "Submit" %>
 <%end%>
 <p id="author-id" data-id=<%=@author.id%>></div>
 
 <script type="text/javascript">
 
+
+
 $(function() {
 
-
-    $('form').submit(submitForm)
+    $('form').on('submit', submitForm)
 
 })
 
@@ -30,7 +31,13 @@ function submitForm(e) {
         posting.done(function(values) {
             getCurrentBooks()
         })
+        $('form').reset()
+
 }
+
+
+
+
 
 function getCurrentBooks() {
     const id = $('#author-id').attr('data-id')
@@ -39,8 +46,13 @@ function getCurrentBooks() {
         const newBook = book[book.length-1]["title"]
         $("#new-books").append('<p>'+newBook+'</p>')
 })
-        $('#book-form').empty()
+
 }
+
+
+
+
+
 
 
 

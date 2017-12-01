@@ -11,13 +11,14 @@
 
 </div>
 
-<div id="new-books"></div>
+<div id="new-books">
+</div>
 
 
 <script type="text/javascript">
 
 $(function() {
-    $('#add-book').on('click', renderForm)
+    $('#add-book').click(renderForm)
     getCurrentBooks()
 
 })
@@ -27,9 +28,10 @@ $(function() {
 
 function renderForm() {
     if (!$('#book-form').is(':empty')) {
-        $('#book-form').append(`<%= j render partial: 'books/form' %>`)
+        $('#book-form').append("<%= j render partial: 'books/form' %>")
+        $('#add-book').off('click', renderForm)
     } else {
-        return false
+        $('#add-book').one('click', renderForm)
     }
 }
 
