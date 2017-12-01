@@ -4,7 +4,7 @@
     <%= f.label :category %>
     <%= f.text_field :category %>
     <%= f.label :description %>
-    <%= f.text_field :description %>
+    <%= f.text_area :description %>
     <%= f.hidden_field :author_id, value: @author.id %>
 
     <%= f.submit "Submit" %>
