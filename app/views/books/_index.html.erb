@@ -5,13 +5,16 @@
 
 <div id="books">
 <% @books.each do |book| %>
-<div class="book <%=book.id%>" data-id=<%=book.id%>>
+<div class="book-<%=book.id%>" data-id=<%=book.id%>>
     <h2>Book Title: <%= book.title%> <br></h2>
     <h4>Book Author: <%= book.author.username%><br></h4>
+    <div class = "book-<%=book.id%>-description">
 
+    </div>
     <button class="more-script-info">More Info</button>
+    <button class="contact">Contact Member</button>
 
-    <p></p>
+
     <br>
     <br>
 </div>
@@ -23,7 +26,8 @@
     $('.more-script-info').click(function() {
         const id = $(this).parent().attr('data-id');
         posting = $.getJSON('/books/'+id+'.json', function(data) {
-            console.log(data)
+            const book = data
+            $(`.book-${id}-description`).text(data["description"])
         })
     })
 
