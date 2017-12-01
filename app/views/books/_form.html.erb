@@ -28,13 +28,12 @@ function submitForm(e) {
         console.log(id)
         const values = $(this).serialize()
         posting = $.post('/books', values)
-        posting.done(function(values) {
+        .done(function(values) {
             getCurrentBooks()
+            $('form').trigger('reset')
         })
-        $('form').reset()
-
+        console.log('done')
 }
-
 
 
 
