@@ -1,0 +1,58 @@
+<%= form_with(model: @book) do |f| %>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+    <%= f.label :category %>
+    <%= f.text_field :category %>
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+    <%= f.hidden_field :author_id, value: @author.id %>
+
+    <%= f.submit "Submit" %>
+<%end%>
+<p id="author-id" data-id=<%=@author.id%>></div>
+
+<script type="text/javascript">
+
+
+
+$(function() {
+
+    $('form').on('submit', submitForm)
+
+})
+
+
+function submitForm(e) {
+        e.preventDefault()
+        const id = $('#author-id').attr('data-id')
+        console.log(id)
+        const values = $(this).serialize()
+        posting = $.post('/books', values)
+        .done(function(values) {
+            getCurrentBooks()
+            $('form').trigger('reset')
+        })
+        console.log('done')
+}
+
+
+
+
+function getCurrentBooks() {
+    const id = $('#author-id').attr('data-id')
+    posting = $.getJSON('/authors/'+id+'book_data', function(data) {
+        const book = data["books"]
+        const newBook = book[book.length-1]["title"]
+        $("#new-books").append('<p>'+newBook+'</p>')
+})
+
+}
+
+
+
+
+
+
+
+
+</script>

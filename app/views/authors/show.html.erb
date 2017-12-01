@@ -1,2 +1,59 @@
 
-<h2>Welcome <%=@author.email%></h2>
+<h2>Welcome <%=@author.full_name %></h2>
+
+
+
+<button id="add-book">Add A New Script</button>
+<div id="book-form">
+</div>
+
+<h3>Your submitted book script inventory</h3>
+<div id="authors-books" data-id=<%=@author.id%>>
+
+</div>
+
+<div id="new-books">
+</div>
+
+
+<script type="text/javascript">
+
+$(function() {
+    $('#add-book').click(renderForm)
+    getCurrentBooks()
+
+})
+
+
+
+
+function renderForm() {
+    if (!$('#book-form').is(':empty')) {
+        $('#book-form').append("<%= j render partial: 'books/form' %>")
+        $('#add-book').off('click', renderForm)
+    } else {
+        $('#add-book').one('click', renderForm)
+    }
+}
+
+
+
+function getCurrentBooks() {
+    const id = $('#authors-books').attr('data-id')
+    posting = $.getJSON('/authors/'+id+'book_data', function(data) {
+        const books = data["books"]
+        const authorBooks = books.map(book => {
+            return '<p>'+book.title+'</p>'
+        })
+        authorBooks.forEach( book => {
+            $("#authors-books").append(book)
+        })
+})
+}
+
+
+
+
+</script>
+
+
