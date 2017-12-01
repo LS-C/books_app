@@ -1,17 +1,37 @@
+<% if !signed_in? %>
+<ul class="user-nav">
+        <li class="">
+          <%= link_to new_publishing_company_session_path do %>
+          <i class="icon-home"></i> Clients Sign In
+          <% end %>
+        </li>
+        <li class="">
+          <%= link_to new_author_session_path do %>
+          <i class="icon-book"></i> Members Sign In
+          <% end %>
+        </li>
+  </ul>
 
-  <ul class="nav pull-right">
-          <li class="">
-            <%= link_to root_path do %>
-            <i class="icon-home"></i> Home
-            <% end %>
-          </li>
-            <%= link_to @current_user do %>
-            <i class="icon-book"></i> Portfolio
-            <% end %>
-          </li>
-          <li class="">
-            <%= link_to(destroy_author_session_path, :method=>'delete') do %>
-            <i class="icon-signout"></i> Logout
-            <% end %>
-          </li>
-    </ul>
+
+<%else%>
+
+<ul class="nav pull-right">
+        <li class="">
+          <%= link_to root_path do %>
+          <i class="icon-home"></i> Home
+          <% end %>
+        </li>
+        <li class="">
+          <%= link_to @current_user do %>
+          <i class="icon-book"></i> Portfolio
+          <% end %>
+        </li>
+        <li class="">
+          <%= link_to(destroy_author_session_path, :method=>'delete') do %>
+          <i class="icon-signout"></i> Logout
+          <% end %>
+        </li>
+  </ul>
+
+  <%end%>
+
