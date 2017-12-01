@@ -9,6 +9,17 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    private
+    def authenticate_client!
+        if current_author
+            authenticate_author!
+        else
+         authenticate_publishing_company!
+        end
+    end
+
+
+
 
 
 

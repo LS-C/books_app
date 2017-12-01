@@ -1,0 +1,31 @@
+<h1>Welcome <%= @publishing_company.username %></h1>
+
+<button id ="load-scripts-button">Browse Scripts</button>
+
+<div id='all-book-scripts'>
+
+
+</div>
+
+
+
+<script type="text/javascript">
+
+    $('#load-scripts-button').click(loadScriptsData)
+
+// function loadScriptsData() {
+//     posting = $.getJSON('/books.json', function(data) {
+//         const books = data
+//         const a = books.map(book => {
+//             return ('<p>'+book.title+'</p><button class="more-info-button" data-id="book.id"></button>')
+//         })
+//         $('#all-book-scripts').append(a)
+//         $('.more-info-button').text("More Info")
+
+//     })
+// }
+
+function loadScriptsData() {
+    $('#all-book-scripts').append("<%= j render 'books/index' %>")
+}
+</script>

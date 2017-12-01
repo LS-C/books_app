@@ -1,0 +1,29 @@
+
+<button>Sort by category</button>
+
+
+
+<div id="books">
+<% @books.each do |book| %>
+<div class="book <%=book.id%>" data-id=<%=book.id%>>
+    <h2>Book Title: <%= book.title%> <br></h2>
+    <h4>Book Author: <%= book.author.username%><br></h4>
+
+    <button class="more-script-info">More Info</button>
+    <p><%= truncate book.description %></p>
+    <br>
+    <br>
+</div>
+<%end%>
+</div>
+
+<script type="text/javascript">
+
+    $('.more-script-info').click(function() {
+        const id = $(this).parent().attr('data-id');
+    })
+
+
+</script>
+
+

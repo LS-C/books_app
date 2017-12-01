@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
-    before_action :authenticate_author!
-    skip_before_action :authenticate_author!, only: [:create]
+    before_action :authenticate_client!
+
 
     def index
         @books = Book.all
@@ -34,5 +34,7 @@ class BooksController < ApplicationController
     def book_params
         params.require(:book).permit(:title, :category, :description, :author_id)
     end
+
+
 
 end

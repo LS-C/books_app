@@ -3,8 +3,12 @@ Rails.application.routes.draw do
   devise_for :authors, path: 'authors'
 
   # resources :publishing_companies
+
   resources :books
   resources :authors
+  resources :publishing_companies
+
+
 
     root to: 'home#index'
 
