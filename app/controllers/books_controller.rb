@@ -11,6 +11,7 @@ class BooksController < ApplicationController
 
     def show
         @book = Book.find(params[:id])
+        @interest = Interest.new
         render json: @book
     end
 
@@ -21,6 +22,7 @@ class BooksController < ApplicationController
 
     def create
         @book = Book.create(book_params)
+        render json: @book
     end
 
     def book_data

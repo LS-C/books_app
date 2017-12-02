@@ -1,6 +1,11 @@
 class InterestsController < ApplicationController
     before_action :authenticate_client!
 
+    def index
+        @interest = Interest.all
+        render json: @interest
+    end
+
     def show
     end
 

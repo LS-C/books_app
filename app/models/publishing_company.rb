@@ -5,5 +5,4 @@ class PublishingCompany < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
          has_many :interests
-         has_many :books, through: :interests
 end

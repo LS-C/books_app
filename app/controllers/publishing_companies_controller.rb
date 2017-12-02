@@ -6,6 +6,12 @@ class PublishingCompaniesController < ApplicationController
     def show
         @publishing_company = PublishingCompany.find(params[:id])
         @books = Book.all
+        @interest = Book.new
+        respond_to do |format|
+            format.html { render :show }
+            format.json { render json: @publishing_company }
+        end
+
     end
 
 

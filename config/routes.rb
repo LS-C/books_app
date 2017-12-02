@@ -7,9 +7,10 @@ Rails.application.routes.draw do
 
   resources :books
   resources :authors
-  resources :publishing_companies do
-    resources :interests, only: [:show, :new, :create]
-  end
+  resources :publishing_companies
+
+
+
 
 
 
@@ -19,7 +20,6 @@ Rails.application.routes.draw do
 
     get 'books/:id/book_data', to: 'books#book_data'
     get 'authors/:id/book_data', to: 'authors#book_data'
-
 
 
 

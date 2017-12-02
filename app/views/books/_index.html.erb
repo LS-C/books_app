@@ -11,8 +11,7 @@
     <div class="book-<%=book.id%>-desciption"></div>
 
     <button class="more-script-info">More Info</button>
-    <button class="book-interest">Consider</button>
-    <p></p>
+    <%= render 'interests/form', :book => book, locals: {url: interests_path(@interest), method: :post}  %>
     <br>
     <br>
 </div>
