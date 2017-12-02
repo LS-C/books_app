@@ -1,12 +1,16 @@
-<div>
-<h2>Welcome <%=@author.full_name %></h2>
+<div class="container">
+    <% if @author.first_name %>
+        <h2>Welcome <%=@author.full_name %></h2>
+    <% else %>
+        <h2>Welcome <%=@author.email %></h2>
+    <%end%>
 
 
 <button id="add-book">Add A New Script</button>
 <div id="book-form">
 </div>
 
-<h3>Your submitted book script inventory</h3>
+<h3>Your Script Inventory</h3>
 
 
 <br>
