@@ -1,5 +1,4 @@
 
-<button>Sort by category</button>
 
 
 
@@ -9,11 +8,11 @@
     <h2>Book Title: <%= book.title%> <br></h2>
     <h4>Book Author: <%= book.author.username%><br></h4>
 
+    <div class="book-<%=book.id%>-desciption"></div>
+
     <button class="more-script-info">More Info</button>
-<<<<<<< HEAD
-=======
+    <button class="book-interest">Consider</button>
     <p></p>
->>>>>>> c84639e66cc63653c251742c263631bfce538255
     <br>
     <br>
 </div>
@@ -24,6 +23,10 @@
 
     $('.more-script-info').click(function() {
         const id = $(this).parent().attr('data-id');
+        posting = $.getJSON('/books/'+id+'.json', function(data) {
+            const book = data
+            $(`.book-${id}-desciption`).text(data["description"])
+        })
     })
 
 
