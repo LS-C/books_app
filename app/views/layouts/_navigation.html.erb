@@ -34,3 +34,29 @@
   </ul>
 
   <%end%>
+
+
+
+<div class="ui top fixed menu">
+  <div class="item">
+    <img src="/images/logo.png">
+  </div>
+  <a class="item">Testimonials</a>
+  <a class="item">
+    <%= link_to @current_user do %>
+    Portfolio
+    <% end %>
+  </a>
+
+  <% if !signed_in? %>
+    <a href="/publishing_companies/sign_in" class="item">Clients Sign-in</a>
+    <a href="/authors/sign_in" class="item">Members Sign-in</a>
+  <%else%>
+    <a href="/publishing_companies/sign_out" class="item">Logout</a>
+  <%end%>
+
+</div>
+
+<p></p>
+<p></p>
+</div>
