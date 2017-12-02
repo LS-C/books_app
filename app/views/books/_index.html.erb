@@ -1,27 +1,45 @@
 
-
-
-
 <div id="books">
-<% @books.each do |book| %>
-<div class="book <%=book.id%>" data-id=<%=book.id%>>
-    <h2>Book Title: <%= book.title%> <br></h2>
-    <h4>Book Author: <%= book.author.username%><br></h4>
+    <% @books.each do |book| %>
+        <div class="book <%=book.id%>" data-id=<%=book.id%>>
 
-    <div class="book-<%=book.id%>-desciption"></div>
+        <div class="ui card">
+          <div class="content">
+            <i class="right floated like icon"></i>
+            <i class="right floated star icon"></i>
+            <div class="header">Book Title: <%= book.title%></div>
+            <div class="meta">Book Author: <%= book.author.username%></div>
 
-    <button class="more-script-info">More Info</button>
-    <%= render 'interests/form', :book => book, locals: {url: interests_path(@interest), method: :post}  %>
-    <br>
-    <br>
+            <div class="description" data-id=<%=book.id%>>
+              <div class="book-<%=book.id%>-desciption"></div>
+             <button class="more-script-info">More Info</button>
+            </div>
+          </div>
+          <div class="extra content">
+            <span class="left floated like">
+              <i class="like icon"></i>
+              Like
+            </span>
+            <span class="right floated star">
+              <i class="star icon"></i>
+              Favorite
+            <%= render 'interests/form', :book => book, locals: {url: interests_path(@interest), method: :post}  %>
+            </span>
+          </div>
+        </div>
+        </div>
+    <%end%>
 </div>
-<%end%>
-</div>
+
+
+
+
 
 <script type="text/javascript">
 
     $('.more-script-info').click(function() {
         const id = $(this).parent().attr('data-id');
+        console.log(id)
         posting = $.getJSON('/books/'+id+'.json', function(data) {
             const book = data
             $(`.book-${id}-desciption`).text(data["description"])
