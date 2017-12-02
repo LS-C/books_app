@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :interests
   devise_for :publishing_companies, path: 'publishing_companies'
   devise_for :authors, path: 'authors'
 
@@ -6,7 +7,10 @@ Rails.application.routes.draw do
 
   resources :books
   resources :authors
-  resources :publishing_companies
+  resources :publishing_companies do
+    resources :interests, only: [:show, :new, :create]
+  end
+
 
 
 

@@ -1,7 +1,6 @@
 class BooksController < ApplicationController
     before_action :authenticate_client!
 
-
     def index
         @books = Book.all
         respond_to do |format|
