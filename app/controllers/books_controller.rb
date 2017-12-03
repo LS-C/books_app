@@ -25,8 +25,8 @@ class BooksController < ApplicationController
     end
 
     def book_data
-        book = Book.find(params[:id])
-        render json: book
+        @book = Book.find(params[:id])
+        render json: @book
     end
 
     def update_interests(user)

@@ -35,11 +35,12 @@
 
 
 $(function() {
-    $('#add-book').click(renderForm)
+
     getCurrentBooks()
 
-})
 
+})
+    $('#add-book').click(renderForm)
 
 
 
@@ -66,6 +67,25 @@ function getCurrentBooks() {
         })
 })
 }
+
+
+
+function submitForm(e) {
+        e.preventDefault()
+        const id = $('#author-id').attr('data-id')
+        const values = $(this).serialize()
+        posting = $.post('/books', values)
+        .done(function(values) {
+            console.log(vaules)
+            getCurrentBooks()
+            $('form').trigger('reset')
+        })
+        console.log('done')
+}
+
+
+
+
 
 
 
