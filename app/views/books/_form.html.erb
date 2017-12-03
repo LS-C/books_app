@@ -31,6 +31,7 @@ function submitForm(e) {
         .done(function(values) {
             getNewBooks()
             $('form').trigger('reset')
+            $('#book-form').empty()
         })
         console.log('done')
 }

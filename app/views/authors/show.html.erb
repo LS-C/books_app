@@ -43,14 +43,8 @@ $(function() {
     $('#add-book').click(renderForm)
 
 
-
 function renderForm() {
-    if (!$('#book-form').is(':empty')) {
-        $('#book-form').append("<%= j render partial: 'books/form' %>")
-        $('#add-book').off('click', renderForm)
-    } else {
-        $('#add-book').one('click', renderForm)
-    }
+        $('#book-form').html("<%= j render partial: 'books/form' %>")
 }
 
 
