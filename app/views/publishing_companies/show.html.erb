@@ -1,12 +1,23 @@
-<h1>Welcome <%= @publishing_company.username %></h1>
+
+<div class="container">
+<h1>Welcome <%= @publishing_company.username.capitalize %></h1>
 
 <button id ="load-scripts-button">Browse Scripts</button>
 
-<div id='all-book-scripts'>
+<br>
+<br>
+<br>
+<br>
 
+<div class="ui grid">
+  <div id="all-book-scripts" class="ui cards"></div>
+  <br>
+</div>
 
 </div>
 
+<br>
+<br>
 
 
 <script type="text/javascript">

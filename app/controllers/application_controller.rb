@@ -18,6 +18,9 @@ class ApplicationController < ActionController::Base
         end
     end
 
+    def current_user
+      @current_user = current_author || current_publishing_company
+    end
 
 
 
