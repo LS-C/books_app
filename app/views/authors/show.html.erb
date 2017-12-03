@@ -12,10 +12,6 @@
 
 <h3>Your Script Inventory</h3>
 
-
-<br>
-<br>
-<br>
 <br>
 
 <div id="authors-books" data-id=<%=@author.id%>>
@@ -54,7 +50,7 @@ function getCurrentBooks() {
     posting = $.getJSON('/authors/'+id+'book_data', function(data) {
         const books = data["books"]
         const authorBooks = books.map(book => {
-            return '<p>'+book.title+'</p>'
+            return `<a href="/books/${book.id}" class="book-link" >`+book.title+'</a><br/>'
         })
         authorBooks.forEach( book => {
             $("#authors-books").append(book)

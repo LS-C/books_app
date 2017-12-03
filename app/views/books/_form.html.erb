@@ -44,7 +44,8 @@ function getNewBooks() {
     posting = $.getJSON('/authors/'+id+'book_data', function(data) {
         const book = data["books"]
         const newBook = book[book.length-1]["title"]
-        $("#authors-books").append('<p>'+newBook+'</p>')
+        const id = book[book.length-1]["id"]
+        $("#authors-books").append(`<a href="/books/${id}" class="book-link">`+newBook+'</a>')
 })
 
 }
