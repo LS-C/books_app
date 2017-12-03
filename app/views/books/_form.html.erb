@@ -1,10 +1,10 @@
-<%= form_with(model: @book) do |f| %>
-    <%= f.label :title %>
-    <%= f.text_field :title %>
-    <%= f.label :category %>
-    <%= f.text_field :category %>
-    <%= f.label :description %>
-    <%= f.text_area :description %>
+<%= form_for @book do |f| %>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %><br>
+    <%= f.label :category %><br>
+    <%= f.text_field :category %><br>
+    <%= f.label :description %><br>
+    <%= f.text_area :description %><br>
     <%= f.hidden_field :author_id, value: @author.id %>
 
     <%= f.submit "Submit" %>
@@ -15,22 +15,23 @@
 
 
 
-$(function() {
 
-    $('form').on('submit', submitForm)
+    $('form').submit(submitForm)
 
-})
+
 
 
 function submitForm(e) {
         e.preventDefault()
         const id = $('#author-id').attr('data-id')
-        console.log(id)
+        console.log('this is working here')
         const values = $(this).serialize()
+        console.log(values)
         posting = $.post('/books', values)
         .done(function(values) {
-            getCurrentBooks()
+            getNewBooks()
             $('form').trigger('reset')
+            $('#book-form').empty()
         })
         console.log('done')
 }
@@ -38,15 +39,17 @@ function submitForm(e) {
 
 
 
-function getCurrentBooks() {
+function getNewBooks() {
     const id = $('#author-id').attr('data-id')
     posting = $.getJSON('/authors/'+id+'book_data', function(data) {
         const book = data["books"]
         const newBook = book[book.length-1]["title"]
-        $("#new-books").append('<p>'+newBook+'</p>')
+        const id = book[book.length-1]["id"]
+        $("#authors-books").append(`<a href="/books/${id}" class="book-link">`+newBook+'</a>')
 })
 
 }
+
 
 
 

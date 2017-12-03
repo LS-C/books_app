@@ -12,10 +12,6 @@
 
 <h3>Your Script Inventory</h3>
 
-
-<br>
-<br>
-<br>
 <br>
 
 <div id="authors-books" data-id=<%=@author.id%>>
@@ -27,7 +23,6 @@
 
 </div>
 
-
 <script type="text/javascript">
 
 
@@ -36,21 +31,16 @@
 
 
 $(function() {
-    $('#add-book').click(renderForm)
+
     getCurrentBooks()
 
+
 })
-
-
+    $('#add-book').click(renderForm)
 
 
 function renderForm() {
-    if (!$('#book-form').is(':empty')) {
-        $('#book-form').append("<%= j render partial: 'books/form' %>")
-        $('#add-book').off('click', renderForm)
-    } else {
-        $('#add-book').one('click', renderForm)
-    }
+        $('#book-form').html("<%= j render partial: 'books/form' %>")
 }
 
 
@@ -60,13 +50,32 @@ function getCurrentBooks() {
     posting = $.getJSON('/authors/'+id+'book_data', function(data) {
         const books = data["books"]
         const authorBooks = books.map(book => {
-            return '<p>'+book.title+'</p>'
+            return `<a href="/books/${book.id}" class="book-link" >`+book.title+'</a><br/>'
         })
         authorBooks.forEach( book => {
             $("#authors-books").append(book)
         })
 })
 }
+
+
+
+function submitForm(e) {
+        e.preventDefault()
+        const id = $('#author-id').attr('data-id')
+        const values = $(this).serialize()
+        posting = $.post('/books', values)
+        .done(function(values) {
+            console.log(vaules)
+            getCurrentBooks()
+            $('form').trigger('reset')
+        })
+        console.log('done')
+}
+
+
+
+
 
 
 

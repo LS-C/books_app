@@ -18,7 +18,7 @@ class InterestsController < ApplicationController
 
     private
     def interest_params
-        params.require(:interest).permit(:publishing_company_id, :book_id)
+        params.require(:interest).permit(:publishing_company, :book_id)
     end
 
 end

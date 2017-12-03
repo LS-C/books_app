@@ -6,7 +6,8 @@ class PublishingCompaniesController < ApplicationController
     def show
         @publishing_company = PublishingCompany.find(params[:id])
         @books = Book.all
-        @interest = Book.new
+        @book = Book.find(params[:id])
+        @interest = Interest.new
         respond_to do |format|
             format.html { render :show }
             format.json { render json: @publishing_company }
