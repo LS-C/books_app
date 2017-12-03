@@ -5,7 +5,6 @@ class Author < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
     has_many :books
-    has_many :interests
 
 
     def full_name
