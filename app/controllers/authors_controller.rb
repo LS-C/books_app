@@ -9,6 +9,7 @@ class AuthorsController < ApplicationController
 
     def show
         @author = Author.find(params[:id])
+        @books = @author.books
         @book = Book.new
         respond_to do |format|
             format.html { render :show }

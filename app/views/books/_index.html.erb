@@ -1,32 +1,27 @@
-<br>
-<br>
-<br>
-<br>
-<br>
+
     <% @books.each do |book| %>
         <div class="book <%=book.id%>" data-id=<%=book.id%>>
 
         <div class="ui card">
           <div class="content">
-            <i class="right floated like icon"></i>
-            <i class="right floated star icon"></i>
-            <div class="header">Title: <%= book.title.capitalize%></div>
+            <div class="header"><%= book.title.capitalize%></div>
             <div class="meta">Author: <%= book.author.username%></div>
 
             <div class="description" data-id=<%=book.id%>>
               <div class="book-<%=book.id%>-desciption"></div>
              <button class="more-script-info">More Info</button>
+             <button class="confirm">Confirm</button>
+              <div div='<%=book.id%>-interest-form'></div>
             </div>
           </div>
-          <div class="extra content">
+          <div class="extra content"  data-id<%=book.id%>>
             <span class="left floated like">
               <i class="like icon"></i>
               Like
             </span>
             <span class="right floated star">
-              <i class="star icon"></i>
+              <i class="star icon" data-id<%=book.id%>></i>
               Favorite
-            <%= render 'interests/form', :book => book, locals: {url: interests_path(@interest), method: :post}  %>
             </span>
           </div>
         </div>
@@ -37,18 +32,25 @@
     <br>
 
 
+            <%#= render 'interests/form', :book => book, locals: {url: interests_path(@interest), method: :post}  %>
 
 
 <script type="text/javascript">
 
     $('.more-script-info').click(function() {
         const id = $(this).parent().attr('data-id');
-        console.log(id)
         posting = $.getJSON('/books/'+id+'.json', function(data) {
             const book = data
             $(`.book-${id}-desciption`).text(data["description"])
         })
     })
+
+    $('.confirm').click(function() {
+        const id = $(this).parent().attr('data-id')
+        console.log(id)
+
+    })
+
 
 
 </script>

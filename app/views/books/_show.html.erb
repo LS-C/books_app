@@ -1,0 +1,36 @@
+
+    <% @books.each do |book| %>
+        <div class="book <%=book.id%>" data-id=<%=book.id%>>
+
+        <div class="ui card">
+          <div class="content">
+            <i class="right floated like icon"></i>
+            <i class="right floated star icon"></i>
+            <div class="header">Title: <%= book.title.capitalize%></div>
+            <div class="meta">Author: <%= book.author.username%></div>
+
+            <div class="description" data-id=<%=book.id%>>
+              <div class="book-<%=book.id%>-desciption"></div>
+              <%= render 'interests/form', :book => book, locals: {url: interests_path(@interest) %>
+             <button class="more-script-info">More Info</button>
+            </div>
+          </div>
+          <div class="extra content">
+            <span class="left floated like">
+              <i class="like icon"></i>
+              Like
+                            <%= render 'interests/form', :book => book, locals: {url: interests_path(@interest) %>
+
+            </span>
+            <span class="right floated star">
+              <i class="star icon"></i>
+              Favorite
+            </span>
+          </div>
+        </div>
+        </div>
+        <br><br>
+    <%end%>
+    <br>
+    <br>
+

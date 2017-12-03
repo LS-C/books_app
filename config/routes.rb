@@ -4,8 +4,12 @@ Rails.application.routes.draw do
   devise_for :authors, path: 'authors'
 
   # resources :publishing_companies
-
   resources :books
+  resources :books do
+    resources :interests
+  end
+
+
   resources :authors
   resources :publishing_companies
 

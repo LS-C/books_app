@@ -11,7 +11,6 @@ class BooksController < ApplicationController
 
     def show
         @book = Book.find(params[:id])
-        @interest = Interest.new
         render json: @book
     end
 
@@ -34,6 +33,10 @@ class BooksController < ApplicationController
     private
     def book_params
         params.require(:book).permit(:title, :category, :description, :author_id)
+    end
+
+    def interest_params
+        params.require(:interest).permit(:book_id, :publishing_company_id)
     end
 
 

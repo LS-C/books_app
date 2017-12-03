@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171202135935) do
+ActiveRecord::Schema.define(version: 20171203031015) do
 
   create_table "authors", force: :cascade do |t|
     t.string "first_name"
@@ -41,8 +41,13 @@ ActiveRecord::Schema.define(version: 20171202135935) do
     t.integer "author_id"
   end
 
+  create_table "conversations", force: :cascade do |t|
+    t.integer "sender_id"
+    t.integer "receiver_id"
+  end
+
   create_table "interests", force: :cascade do |t|
-    t.integer "publishing_company_id"
+    t.integer "author_id"
     t.integer "book_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -56,6 +61,14 @@ ActiveRecord::Schema.define(version: 20171202135935) do
   create_table "messages", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "body"
+    t.integer "conversations_id"
+    t.integer "authors_id"
+    t.integer "publishing_companies_id"
+    t.boolean "read", default: false
+    t.index ["authors_id"], name: "index_messages_on_authors_id"
+    t.index ["conversations_id"], name: "index_messages_on_conversations_id"
+    t.index ["publishing_companies_id"], name: "index_messages_on_publishing_companies_id"
   end
 
   create_table "publishing_companies", force: :cascade do |t|
