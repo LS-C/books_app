@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     get 'books/:id/book_data', to: 'books#book_data'
     get 'authors/:id/book_data', to: 'authors#book_data'
     # post '/interests', to: 'interests#create', as: :interests
-    get '/interests', to: 'interests#index'
+    # get '/interests', to: 'interests#index'
     post '/book/:id/interest' => 'books#interest', as: :interest
 
 

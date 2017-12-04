@@ -27,7 +27,6 @@
               <i class="bookmark icon" data-id<%=book.id%>></i>
               Interested Content!!
             </span>
-            <!-- <%#= render 'interests/form', :book => book, locals: {url: interests_path}  %> -->
           </div>
 
           <!-- start bottom-content -->
@@ -42,7 +41,7 @@
 
               <%end%>
 
-              <div class="interests-message"><%= book.interests_message(current_publishing_company) %></div>
+              <div id="book-<%= book.id %>-interests-message"><%= book.interests_message(current_publishing_company) %></div>
             </div> <!-- end interest -->
 
 
@@ -76,13 +75,27 @@
 
     })
 
+    // $('.interest-link').click(function(e) {
+    //   e.stopPropagation()
+    //   e.preventDefault()
+    //   const bookID = $(this).find($("div[book_id]")).attr("book_id")
+    // })
+
     $('.interest-link').click(function(e) {
       e.stopPropagation()
       e.preventDefault()
       const url = $(this).attr('href')
+      const $heart = $(this).children().children()
+      const bookId = $(this).find($("div[book_id]")).attr("book_id")
       $.ajax({
         method: 'POST',
         url: url,
+        dataType: 'json',
+        success: function(data) {
+          const newInterest = data["heart_class"]
+          $heart.attr('class', newInterest)
+          $('#book-'+bookId+'-interests-message').html(data["interests_message"])
+        }
       })
     })
 

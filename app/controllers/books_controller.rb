@@ -45,12 +45,14 @@ class BooksController < ApplicationController
   end
 
   def interest
-    @book = Book.find(params[:id])
-    @current_user = current_publishing_company
-    @interest = @current_user.interests.create(book_id: @book.id, publishing_company_id: @current_user.id)
-    render json: @interest
-
+      @book = Book.find(params[:id])
+      @book.update_interests(current_publishing_company)
+      # redirect_to root_path
+      respond_to do |format|
+        format.json { render json: { heart_class: @book.heart_class(current_publishing_company), interests_message: @book.interests_message(current_publishing_company)}}
+      end
   end
+
 
   def heart_class(user)
     if user_interested?(user)

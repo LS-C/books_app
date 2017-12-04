@@ -9,22 +9,23 @@ class Book < ApplicationRecord
     end
 
 
-    def interest
-        @book = Book.find(params[:id])
-        @book.update_interests(current_publishing_company)
-        redirect_to root_path
-    end
-
-
     def update_interests(publishing_company)
         publishing_company_interested?(publishing_company) ? uninterest(publishing_company) : interest(publishing_company)
     end
 
     def interests_message(publishing_company)
       if !publishing_company_interested?(publishing_company)
-        "<strong>#{self.interests.count} people</strong> interest this image".html_safe
+        if self.interests.count == 1
+          "<strong>#{self.interests.count} company </strong> is interested this book".html_safe
+        else
+          "<strong>#{self.interests.count} companies </strong> are interestest this book".html_safe
+        end
       else
-        "<strong>You</strong> and <strong>#{self.interests.count - 1} other people</strong> interest this image".html_safe
+        if self.interests.count-1 == 1
+          "<strong>You</strong> and <strong>#{self.interests.count - 1} other company </strong> is interested in this book".html_safe
+        else
+          "<strong>You</strong> and <strong>#{self.interests.count - 1} other companies </strong> are interested in this book".html_safe
+        end
       end
     end
 
