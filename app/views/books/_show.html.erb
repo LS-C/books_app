@@ -1,16 +1,15 @@
 <div class="container">
-    <% @books.each do |book| %>
-        <div class="book <%=book.id%>" data-id=<%=book.id%>>
+        <div class="book <%=@book.id%>" data-id="<%=@book.id%>"">
 
         <div class="ui card">
           <div class="content">
             <i class="right floated like icon"></i>
             <i class="right floated star icon"></i>
-            <div class="header">Title: <%= book.title.capitalize%></div>
-            <div class="meta">Author: <%= book.author.username%></div>
+            <div class="header">Title: <%= @book.title.capitalize%></div>
+            <div class="meta">Author: <%= @book.author.username%></div>
 
-            <div class="description" data-id=<%=book.id%>>
-              <div class="book-<%=book.id%>-desciption"></div>
+            <div class="description" data-id=<%=@book.id%>>
+              <div class="book-<%=@book.id%>-desciption"></div>
              <button class="more-script-info">More Info</button>
             </div>
           </div>
@@ -26,31 +25,12 @@
             </span>
           </div>
         </div>
-        <%=book.id%>
-
-                <div class="bottom-content">
-
-          <div class="like">
-
-              <div class="like-btn text-center" book_id="<%= book.id %>" author_id="<%=book.author.id%>">
-                <p>Button</p>
-                <span class=""></span>
-              </div>
-
-            <div class="likes-message"><%#= picture.likes_message(current_user) %></div>
-          </div> <!-- end like -->
-
-
-
-        </div> <!-- end bottom-content -->
-
-
-    <%end%>
+        <%=@book.id%>
 
     </div>
 
     <br>
-    <br>
+    <!-- <br>
 <script type="text/javascript">
   $('.like-btn').click(function() {
       var $btn = $(this);
@@ -73,23 +53,4 @@
         });
   })
 </script>
- <!--   $('.like-btn').click(function(){
-    var $btn = $(this);
-    var pictureId = $btn.attr('picture_id');
-
-    // this function toggles the heart button and updates the text (called after ajax success)
-    function updateLikes($btn, results){
-      $btn.find('span').toggleClass('grey-heart red-heart');
-      $btn.parent().find('.likes-message').html(results.message);
-    }
-
-    // post request to the rails controller
-    $.ajax({
-      type: 'POST',
-      url:'/picture/' +pictureId+ '/like',
-      success: function(results){
-        updateLikes($btn, results);
-      }
-    });
-
-  }); -->
+ -->

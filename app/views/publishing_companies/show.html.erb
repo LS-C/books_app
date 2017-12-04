@@ -13,7 +13,10 @@
 </div>
 
 <div class="ui grid">
-  <div id="all-book-scripts" class="ui cards"></div>
+  <div id="all-book-scripts" class="ui cards">
+
+
+  </div>
   <br>
 </div>
 
@@ -23,13 +26,12 @@
 <br>
 
 
-
 <script type="text/javascript">
 
-    $('#load-scripts-button').click(loadScriptsData)
 
-    function loadScriptsData() {
-        $('#all-book-scripts').append("<%= j render 'books/index' %>")
-    }
+$('#load-scripts-button').click(loadScriptsData)
+function loadScriptsData() {
+    $('#all-book-scripts').append("<%= j render 'books/index' %>")
+}
 
 </script>

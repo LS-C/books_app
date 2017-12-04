@@ -25,10 +25,29 @@
 
             <span class="right floated bookmark">
               <i class="bookmark icon" data-id<%=book.id%>></i>
-              Interested Content
+              Interested Content!!
             </span>
             <!-- <%#= render 'interests/form', :book => book, locals: {url: interests_path}  %> -->
           </div>
+
+          <!-- start bottom-content -->
+          <div class="bottom-content">
+
+            <div class="interest">
+              <%= link_to interest_path(id: book.id), method: :post, class: 'interest-link' do %>
+
+                <div class="interest-btn text-center" book_id="<%= book.id %>">
+                  <i class="<%= book.heart_class(current_publishing_company) %>"></i>
+                </div>
+
+              <%end%>
+
+              <div class="interests-message"><%= book.interests_message(current_publishing_company) %></div>
+            </div> <!-- end interest -->
+
+
+
+          </div> <!-- end bottom-content -->
 
         </div>
         </div>
@@ -56,6 +75,17 @@
         console.log(id)
 
     })
+
+    $('.interest-link').click(function(e) {
+      e.stopPropagation()
+      e.preventDefault()
+      const url = $(this).attr('href')
+      $.ajax({
+        method: 'POST',
+        url: url,
+      })
+    })
+
 
 
 
