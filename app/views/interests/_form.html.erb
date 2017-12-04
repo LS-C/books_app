@@ -2,10 +2,8 @@
     <%= f.hidden_field :publishing_company_id, value: current_publishing_company.id %>
     <%= f.hidden_field :book_id, value: book.id %>
 
-    <%= f.submit "CONFIRM"%>
+    <%= f.submit "Interested"%>
 <%end%>
-<h1>Hello</h1>
-<h1><%=current_publishing_company.id%></h1>
 
 
 <script type="text/javascript" charset="utf-8">
@@ -15,12 +13,11 @@
       event.preventDefault();
 
       const values = $(this).serialize();
-
       const posting = $.post('/interests', values);
 
       posting.done(function(data) {
         const post = data
-        console.log(post)
+        console.log('success')
       });
     });
   });

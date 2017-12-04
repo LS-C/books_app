@@ -2,8 +2,8 @@ class InterestsController < ApplicationController
     before_action :authenticate_client!
 
     def index
-        @interest = Interest.all
-        render json: @interest
+        @interests = Interest.all
+        render json: @interests
     end
 
     def show
@@ -14,7 +14,7 @@ class InterestsController < ApplicationController
 
     def create
         @interest = Interest.create(interest_params)
-        render json: @interest
+          render json: @interest 
     end
 
     private
