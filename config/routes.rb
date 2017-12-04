@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   devise_for :publishing_companies, path: 'publishing_companies'
   devise_for :authors, path: 'authors'
 
-  # resources :publishing_companies
   resources :books
 
 
