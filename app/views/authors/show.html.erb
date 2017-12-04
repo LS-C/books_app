@@ -6,11 +6,18 @@
     <%end%>
 
 
-<button id="add-book">Add A New Script</button>
+
+
 <div id="book-form">
 </div>
 
 <h3>Your Script Inventory</h3>
+<select class="ui search dropdown">
+  <option value="">Sort By</option>
+  <option value="AZ">Books A-Z</option>
+  <option value="ZA">Books Z-A</option>
+  <option value="AZ">Book uplodaded in 3 months</option>
+</select>
 
 <br>
 
@@ -22,6 +29,7 @@
 </div>
 
 </div>
+<button id="add-book">Add A New Script</button>
 
 <script type="text/javascript">
 
@@ -37,6 +45,16 @@ $(function() {
 
 })
     $('#add-book').click(renderForm)
+
+    $('.ui.search.dropdown').change(function() {
+      const searchOption= ($( ".ui.search.dropdown option:selected").text());
+      console.log(searchOption)
+      if (searchOption === "Books A-Z") {
+          sortBookAsc()
+      } else if (searchOption === "Books Z-A") {
+          sortBookDesc()
+      }
+    })
 
 
 function renderForm() {
@@ -74,6 +92,39 @@ function submitForm(e) {
 }
 
 
+function sortBookAsc() {
+      const id = $('#authors-books').attr('data-id')
+      posting = $.getJSON('/authors/'+id+'book_data', function(data) {
+          const books = data["books"]
+      const sortedBooksAsc = books.sort(function(a,b){
+          return a.title.localeCompare(b.title);
+      })
+      const authorBooks = sortedBooksAsc.map(book => {
+          return `<a href="/books/${book.id}" class="book-link" >`+book.title+'</a><br/>'
+      })
+      $("#authors-books").empty()
+        authorBooks.forEach( book => {
+        $("#authors-books").append(book)
+      })
+    })
+  }
+  function sortBookDesc() {
+        const id = $('#authors-books').attr('data-id')
+        posting = $.getJSON('/authors/'+id+'book_data', function(data) {
+            const books = data["books"]
+        const sortedBooksAsc = books.sort(function(a,b){
+            return b.title.localeCompare(a.title);
+        })
+        const authorBooks = sortedBooksAsc.map(book => {
+            return `<a href="/books/${book.id}" class="book-link" >`+book.title+'</a><br/>'
+        })
+        $("#authors-books").empty()
+          authorBooks.forEach( book => {
+          $("#authors-books").append(book)
+        })
+      })
+    }
+
 
 
 
@@ -81,9 +132,3 @@ function submitForm(e) {
 
 
 </script>
-
-
-
-
-
-
