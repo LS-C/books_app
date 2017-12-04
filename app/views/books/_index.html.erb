@@ -28,6 +28,7 @@
               <i class="bookmark icon" data-id<%=book.id%>></i>
               Interested Content
             </span>
+            <%= render 'interests/form', :book => book, locals: {url: interests_path}  %>
           </div>
 
         </div>
@@ -38,8 +39,8 @@
     <br>
 
 
-
     <%#= render 'interests/form', :book => book, locals: {url: interests_path(@interest), method: :post}  %>
+
 
 <script type="text/javascript">
 
