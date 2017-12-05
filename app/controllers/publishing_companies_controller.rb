@@ -26,7 +26,7 @@ class PublishingCompaniesController < ApplicationController
     def access_to_own_account
       @client = PublishingCompany.find(params[:id])
 
-      if current_publishing_company != @client
+      if @client != current_publishing_company
         redirect_to root_path, notice: "Sorry, but you are only allowed to view your own profile page."
       end
     end
