@@ -16,7 +16,6 @@ div, .book-title, .book-description, .book-author {
     margin-top: 80px;
 }
 
-
 body.welcome {
      background-image: url('george-peabody-library.jpg');
      background-repeat: no-repeat;
@@ -26,6 +25,14 @@ body.welcome {
 .welcome-message {
   font-family: 'Libre Franklin', sans-serif;
   color: #FEFFF1;
+}
+
+.book-img {
+  height: 200px;
+}
+
+.book_nav_links {
+  margin-left: 40px;
 }
 
 // #add-book-form-box {
