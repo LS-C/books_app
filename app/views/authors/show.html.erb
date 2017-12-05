@@ -1,6 +1,6 @@
 <div class="container">
     <% if @author.first_name %>
-        <h2>Welcome <%=@author.full_name %></h2>
+        <h2>Welcome <%=@author.full_name %></h2> 
     <% else %>
         <h2>Welcome <%=@author.email %></h2>
     <%end%>
@@ -64,7 +64,7 @@ function renderForm() {
 
 function getCurrentBooks() {
     const id = $('#authors-books').attr('data-id')
-    posting = $.getJSON('/authors/'+id+'book_data', function(data) {
+    posting = $.getJSON('/authors/'+id+'/book_data', function(data) {
         const books = data["books"]
         console.log(books)
         const authorBooks = books.map(book => {
@@ -93,7 +93,7 @@ function submitForm(e) {
 
 function sortBookAsc() {
       const id = $('#authors-books').attr('data-id')
-      posting = $.getJSON('/authors/'+id+'book_data', function(data) {
+      posting = $.getJSON('/authors/'+id+'/book_data', function(data) {
           const books = data["books"]
       const sortedBooksAsc = books.sort(function(a,b){
           return a.title.localeCompare(b.title);
@@ -110,7 +110,7 @@ function sortBookAsc() {
 
   function sortBookDesc() {
         const id = $('#authors-books').attr('data-id')
-        posting = $.getJSON('/authors/'+id+'book_data', function(data) {
+        posting = $.getJSON('/authors/'+id+'/book_data', function(data) {
             const books = data["books"]
         const sortedBooksAsc = books.sort(function(a,b){
             return b.title.localeCompare(a.title);
