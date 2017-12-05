@@ -1,5 +1,4 @@
 body {
-    font-family: 'Playfair Display', serif;
     margin-top: 40px;
 }
 
@@ -8,8 +7,9 @@ button {
     font-size: 14px;
 }
 
-div {
+div, .book-title, .book-description, .book-author {
     margin-left: 20px;
+    font-family: 'Libre Franklin', sans-serif;
 }
 
 .container {
@@ -25,8 +25,8 @@ body.welcome {
 }
 
 .welcome-message {
-  color: #FEFFF1;
   font-family: 'Libre Franklin', sans-serif;
+  color: #FEFFF1;
 }
 
 // #add-book-form-box {
