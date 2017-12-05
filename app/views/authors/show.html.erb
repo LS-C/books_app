@@ -66,8 +66,9 @@ function getCurrentBooks() {
     const id = $('#authors-books').attr('data-id')
     posting = $.getJSON('/authors/'+id+'book_data', function(data) {
         const books = data["books"]
+        console.log(books)
         const authorBooks = books.map(book => {
-            return `<a href="/books/${book.id}" class="book-link" >`+book.title+'</a><br/>'
+            return `<a href="/authors/${id}/books/${book.id}" class="book-link" >`+book.title+'</a><br/>'
         })
         authorBooks.forEach( book => {
             $("#authors-books").append(book)

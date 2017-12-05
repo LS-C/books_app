@@ -5,13 +5,10 @@ Rails.application.routes.draw do
   resources :books
 
 
-
-  resources :authors
-  resources :publishing_companies
-
-
-
-
+  resources :authors do
+    resources :books, only: [:show]
+  end
+  resources :publishing_companies, only: [:index, :show, :create]
 
 
 
@@ -20,8 +17,7 @@ Rails.application.routes.draw do
 
     get 'books/:id/book_data', to: 'books#book_data'
     get 'authors/:id/book_data', to: 'authors#book_data'
-    # post '/interests', to: 'interests#create', as: :interests
-    # get '/interests', to: 'interests#index'
+
     post '/book/:id/interest' => 'books#interest', as: :interest
 
 

@@ -23,8 +23,7 @@ class AuthorsController < ApplicationController
 
     def book_data
         @author = Author.find(params[:id])
-        book = @author.books
-        render json: book
+        render json: @author
     end
 
 
