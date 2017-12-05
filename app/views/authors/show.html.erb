@@ -46,37 +46,47 @@ $(function() {
     getCurrentBooks()
 
 
+
 })
     $('#add-book').click(renderForm)
 
     $('.ui.search.dropdown').change(function() {
       const searchOption= ($( ".ui.search.dropdown option:selected").text());
-      console.log(searchOption)
-      if (searchOption === "Books A-Z") {
-          sortBookAsc()
-      } else if (searchOption === "Books Z-A") {
-          sortBookDesc()
-      }
+      const authorId = $('#authors-books').attr('data-id')
+      let sortedBooks = []
+
+      posting = $.getJSON('/authors/'+authorId+'/book_data')
+      posting.done(function(data) {
+        const books = data["books"]
+        if (searchOption === "Books A-Z") {
+          sortedBooks = sortBookAsc(books)
+        } else if (searchOption === "Books Z-A") {
+          sortedBooks = sortBookDesc(books)
+        }
+        const authorBooks = sortedBooks.map(book => {
+          return `<div class="four wide column"><a href="/books/${book.id}" class="book-link" >`+book.title+'</a></div><br/>'
+        })
+        refreshPageWithSortBooks(authorBooks)
     })
+})
+
 
 function renderForm() {
         $('#book-form').html("<%= j render partial: 'books/form' %>")
 }
 
 
-
 function getCurrentBooks() {
     const id = $('#authors-books').attr('data-id')
     posting = $.getJSON('/authors/'+id+'/book_data', function(data) {
         const books = data["books"]
-        console.log(books)
         const authorBooks = books.map(book => {
             return `<div class="four wide column"><a href="/authors/${id}/books/${book.id}" class="book-link" >`+book.title+'</a></div><br/>'
         })
         authorBooks.forEach( book => {
             $("#authors-books").append(book)
         })
-})
+      })
 }
 
 
@@ -94,39 +104,29 @@ function submitForm(e) {
         console.log('done')
 }
 
-function sortBookAsc() {
-      const id = $('#authors-books').attr('data-id')
-      posting = $.getJSON('/authors/'+id+'/book_data', function(data) {
-          const books = data["books"]
-      const sortedBooksAsc = books.sort(function(a,b){
+
+
+
+
+
+function sortBookAsc(data) {
+      return data.sort(function(a,b){
           return a.title.localeCompare(b.title);
       })
-      const authorBooks = sortedBooksAsc.map(book => {
-          return `<div class="four wide column"><a href="/books/${book.id}" class="book-link" >`+book.title+'</a></div><br/>'
-      })
-      $("#authors-books").empty()
-        authorBooks.forEach( book => {
-        $("#authors-books").append(book)
-      })
-    })
-  }
+}
 
-  function sortBookDesc() {
-        const id = $('#authors-books').attr('data-id')
-        posting = $.getJSON('/authors/'+id+'/book_data', function(data) {
-            const books = data["books"]
-        const sortedBooksAsc = books.sort(function(a,b){
+function sortBookDesc(data) {
+        return data.sort(function(a,b){
             return b.title.localeCompare(a.title);
-        })
-        const authorBooks = sortedBooksAsc.map(book => {
-            return `<div class="four wide column"><a href="/books/${book.id}" class="book-link" >`+book.title+'</a></div><br/>'
-        })
-        $("#authors-books").empty()
-          authorBooks.forEach( book => {
-          $("#authors-books").append(book)
-        })
       })
-    }
+}
+
+function refreshPageWithSortBooks(data) {
+    $("#authors-books").empty()
+    data.forEach( book => {
+      $("#authors-books").append(book)
+    })
+}
 
 
 
