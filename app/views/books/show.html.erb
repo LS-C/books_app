@@ -19,6 +19,7 @@
 
   $('#next-book-link').click(function(e) {
     e.preventDefault()
+    e.stopPropagation()
     const nextBookId = parseInt($('.book-title').attr('book_id')) + 1
     const authorId = $('.book-title').attr('author_id')
     bookData = $.getJSON('/authors/'+authorId+'book_data')
