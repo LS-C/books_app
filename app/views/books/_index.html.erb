@@ -50,10 +50,11 @@
 
         </div>
         </div>
+        <%end%>
         <br><br>
-    <%end%>
     <br>
     <br>
+
 
 
     <%#= render 'interests/form', :book => book, locals: {url: interests_path(@interest), method: :post}  %>
@@ -74,12 +75,6 @@
         console.log(id)
 
     })
-
-    // $('.interest-link').click(function(e) {
-    //   e.stopPropagation()
-    //   e.preventDefault()
-    //   const bookID = $(this).find($("div[book_id]")).attr("book_id")
-    // })
 
     $('.interest-link').click(function(e) {
       e.stopPropagation()

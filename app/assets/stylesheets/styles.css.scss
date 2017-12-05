@@ -29,6 +29,25 @@ body.welcome {
   font-family: 'Libre Franklin', sans-serif;
 }
 
+// #add-book-form-box {
+//   float: right;
+//   margin-right: 400px;
+// }
+
+#book-sort-dropdown-menu {
+  height: 25px !important;
+  font-size: 12px;
+}
+
+#add-book-form-box {
+  text-align: center;
+}
+
+.four.wide.column {
+    text-align: center;
+ }
+
+
 button {
     background-color: #699DB6;
     border-color: rgba(0,0,0,0.3);

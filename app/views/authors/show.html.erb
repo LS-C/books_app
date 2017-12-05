@@ -1,35 +1,38 @@
 <div class="container">
     <% if @author.first_name %>
-        <h2>Welcome <%=@author.full_name %></h2> 
+        <h2>Welcome <%=@author.full_name %></h2>
     <% else %>
         <h2>Welcome <%=@author.email %></h2>
     <%end%>
 
 
-<div id="book-form">
-</div>
-
 <h3>Your Script Inventory</h3>
 
-<select class="ui search dropdown">
+<select id="book-sort-dropdown-menu" class="ui search dropdown"  >
   <option value="">Sort By</option>
   <option value="AZ">Books A-Z</option>
   <option value="ZA">Books Z-A</option>
   <option value="AZ">Book uplodaded in 3 months</option>
 </select>
-
+<br>
 <br>
 
-<div id="authors-books" data-id=<%=@author.id%>>
+<div id="authors-books" data-id="<%=@author.id%>" class="ui grid">
 
 </div>
 
 <div id="new-books">
 </div>
+<br>
+<br>
+<br>
+    <div id="add-book-form-box">
+      <button id="add-book">Add A New Script</button>
+      <div id="book-form"></div>
+    </div>
 
 </div>
 <br>
-<button id="add-book">Add A New Script</button>
 
 <script type="text/javascript">
 
@@ -68,7 +71,7 @@ function getCurrentBooks() {
         const books = data["books"]
         console.log(books)
         const authorBooks = books.map(book => {
-            return `<a href="/authors/${id}/books/${book.id}" class="book-link" >`+book.title+'</a><br/>'
+            return `<div class="four wide column"><a href="/authors/${id}/books/${book.id}" class="book-link" >`+book.title+'</a></div><br/>'
         })
         authorBooks.forEach( book => {
             $("#authors-books").append(book)
@@ -99,7 +102,7 @@ function sortBookAsc() {
           return a.title.localeCompare(b.title);
       })
       const authorBooks = sortedBooksAsc.map(book => {
-          return `<a href="/books/${book.id}" class="book-link" >`+book.title+'</a><br/>'
+          return `<div class="four wide column"><a href="/books/${book.id}" class="book-link" >`+book.title+'</a></div><br/>'
       })
       $("#authors-books").empty()
         authorBooks.forEach( book => {
@@ -116,7 +119,7 @@ function sortBookAsc() {
             return b.title.localeCompare(a.title);
         })
         const authorBooks = sortedBooksAsc.map(book => {
-            return `<a href="/books/${book.id}" class="book-link" >`+book.title+'</a><br/>'
+            return `<div class="four wide column"><a href="/books/${book.id}" class="book-link" >`+book.title+'</a></div><br/>'
         })
         $("#authors-books").empty()
           authorBooks.forEach( book => {
