@@ -16,6 +16,19 @@ div {
     margin-top: 80px;
 }
 
+
+body.welcome {
+
+     background-image: url('george-peabody-library.jpg');
+     background-repeat: no-repeat;
+     background-size: cover;
+}
+
+.welcome-message {
+  color: #FEFFF1;
+  font-family: 'Libre Franklin', sans-serif;
+}
+
 button {
     background-color: #699DB6;
     border-color: rgba(0,0,0,0.3);
