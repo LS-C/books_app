@@ -14,6 +14,7 @@ button {
 
 .container {
     margin-top: 80px;
+    margin-left: 40px;
 }
 
 body.welcome {
@@ -37,7 +38,7 @@ body.welcome {
   margin-left: 40px;
 }
 
-.welcome-client, .browse-all-books {
+.welcome-client, .welcome-member, .browse-all-books, .sort-book-options {
   text-align: center;
 }
 
@@ -80,7 +81,6 @@ button {
 
 .registration-shared-links {
     padding-top: 10px;
-    margin-left: 20px;
 }
 
 .book-link {

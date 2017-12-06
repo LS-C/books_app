@@ -45,17 +45,9 @@ function getNewBooks() {
         const book = data["books"]
         const newBook = book[book.length-1]["title"]
         const id = book[book.length-1]["id"]
-        $("#authors-books").append(`<a href="/books/${id}" class="book-link">`+newBook+'</a>')
+        $("#authors-books").append(`<div class="four wide column"><a href="/books/${id}" class="book-link">`+newBook+'</a></div><br/>')
 })
 
 }
-
-
-
-
-
-
-
-
 
 </script>

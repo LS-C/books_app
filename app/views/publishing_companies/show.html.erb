@@ -11,6 +11,14 @@
       <i class="book icon"></i>
       Browse Scripts
     </button>
+
+
+
+    <button id='interests-book-btn' class="ui heart button">
+      <i class="heart icon"></i>
+      Interested Books
+    </button>
+
   </div>
 <br>
 <br>
@@ -32,9 +40,7 @@
 <br>
 <br>
 
-<button id='interests-book-btn' class="small ui left floated button">
-  Small
-</button>
+
 
 <script type="text/javascript">
 
@@ -51,7 +57,14 @@ $('#interests-book-btn').click(function() {
   console.log(authorId)
   request = $.getJSON('/publishing_companies/'+authorId+'/interests')
   request.done(function(data) {
+    const books = data
     console.log(data)
+    const interestedBooks = books.map( book => {
+      return book.book_id
+    })
+    console.log(interestedBooks)
+      $('#all-book-scripts').empty()
+      $('#all-book-scripts').append("<%= j render 'books/index' %>")
   })
 })
 

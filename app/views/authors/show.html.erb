@@ -1,19 +1,28 @@
 <div class="container">
+
+  <div class="welcome-member">
+
     <% if @author.first_name %>
         <h2>Welcome <%=@author.full_name %></h2>
     <% else %>
         <h2>Welcome <%=@author.email %></h2>
     <%end%>
 
+  </div>
 
-<h3>Your Script Inventory</h3>
+<div class="sort-book-options">
 
-<select id="book-sort-dropdown-menu" class="ui search dropdown"  >
-  <option value="">Sort By</option>
-  <option value="AZ">Books A-Z</option>
-  <option value="ZA">Books Z-A</option>
-  <option value="AZ">Book uplodaded in 3 months</option>
-</select>
+  <h3>Your Script Inventory</h3>
+
+    <select id="book-sort-dropdown-menu" class="ui search dropdown"  >
+      <option value="">Sort By</option>
+      <option value="AZ">Books A-Z</option>
+      <option value="ZA">Books Z-A</option>
+      <option value="AZ">Recent Books</option>
+    </select>
+
+</div>
+
 <br>
 <br>
 
