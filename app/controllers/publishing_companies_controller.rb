@@ -22,6 +22,12 @@ class PublishingCompaniesController < ApplicationController
       end
     end
 
+    def interests
+      @author = Author.find(params[:id])
+      @intersts = @author.interests
+      render json: @interests
+    end
+
     private
     def access_to_own_account
       @client = PublishingCompany.find(params[:id])

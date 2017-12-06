@@ -1,7 +1,7 @@
 
 <div class="container">
 
-  <div class="welcome-client">
+  <div class="welcome-client" author_id="<%=@publishing_company.id%>">
     <h1>Welcome <%= @publishing_company.username.capitalize %></h1>
   </div>
 <br>
@@ -32,6 +32,9 @@
 <br>
 <br>
 
+<button id='interests-book-btn' class="small ui left floated button">
+  Small
+</button>
 
 <script type="text/javascript">
 
@@ -40,5 +43,17 @@ $('#load-scripts-button').click(loadScriptsData)
 function loadScriptsData() {
     $('#all-book-scripts').append("<%= j render 'books/index' %>")
 }
+
+
+
+$('#interests-book-btn').click(function() {
+  const authorId = $('.welcome-client').attr('author_id')
+  console.log(authorId)
+  request = $.getJSON('/publishing_companies/'+authorId+'/interests')
+  request.done(function(data) {
+    console.log(data)
+  })
+})
+
 
 </script>

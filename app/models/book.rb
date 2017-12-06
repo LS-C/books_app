@@ -30,11 +30,7 @@ class Book < ApplicationRecord
     end
 
     def heart_class(publishing_company)
-      if publishing_company_interested?(publishing_company)
-        "heart icon"
-      else
-        "empty heart icon"
-      end
+      publishing_company_interested?(publishing_company) ? "heart icon" : "empty heart icon"
     end
 
     private
