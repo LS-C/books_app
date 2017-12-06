@@ -7,7 +7,7 @@ button {
     font-size: 14px;
 }
 
-div, .book-title, .book-description, .book-author {
+#all-book-scripts, .ui.card, .book-title, .book-description, .book-author {
     margin-left: 20px;
     font-family: 'Libre Franklin', sans-serif;
 }
@@ -27,12 +27,18 @@ body.welcome {
   color: #FEFFF1;
 }
 
+
+
 .book-img {
   height: 200px;
 }
 
 .book_nav_links {
   margin-left: 40px;
+}
+
+.welcome-client, .browse-all-books {
+  text-align: center;
 }
 
 // #add-book-form-box {

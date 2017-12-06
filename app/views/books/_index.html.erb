@@ -1,6 +1,5 @@
 
     <% @books.each do |book| %>
-        <div class="book <%=book.id%>" data-id=<%=book.id%>>
 
         <div class="ui card">
           <div class="content">
@@ -49,15 +48,10 @@
           </div> <!-- end bottom-content -->
 
         </div>
-        </div>
         <%end%>
         <br><br>
     <br>
     <br>
-
-
-
-    <%#= render 'interests/form', :book => book, locals: {url: interests_path(@interest), method: :post}  %>
 
 
 <script type="text/javascript">

@@ -16,15 +16,15 @@ class Book < ApplicationRecord
     def interests_message(publishing_company)
       if !publishing_company_interested?(publishing_company)
         if self.interests.count == 1
-          "<strong>#{self.interests.count} company </strong> is interested this book".html_safe
+          "<strong>#{self.interests.count} company </strong> is interested".html_safe
         else
-          "<strong>#{self.interests.count} companies </strong> are interestest this book".html_safe
+          "<strong>#{self.interests.count} companies </strong> are interestest".html_safe
         end
       else
         if self.interests.count-1 == 1
-          "<strong>You</strong> and <strong>#{self.interests.count - 1} other company </strong> is interested in this book".html_safe
+          "<strong>You</strong> and <strong>#{self.interests.count - 1} other company </strong> is interested".html_safe
         else
-          "<strong>You</strong> and <strong>#{self.interests.count - 1} other companies </strong> are interested in this book".html_safe
+          "<strong>You</strong> and <strong>#{self.interests.count - 1} other companies </strong> are interested".html_safe
         end
       end
     end

@@ -1,9 +1,17 @@
 
 <div class="container">
-<h1>Welcome <%= @publishing_company.username.capitalize %></h1>
 
-<button id ="load-scripts-button">Browse Scripts</button>
-
+  <div class="welcome-client">
+    <h1>Welcome <%= @publishing_company.username.capitalize %></h1>
+  </div>
+<br>
+<br>
+  <div class="browse-all-books">
+    <button id ="load-scripts-button" class="ui basic button">
+      <i class="book icon"></i>
+      Browse Scripts
+    </button>
+  </div>
 <br>
 <br>
 <br>
@@ -11,8 +19,7 @@
 <div class="1">
 
 </div>
-
-<div class="ui grid">
+<div id="book-card" class="ui grid">
   <div id="all-book-scripts" class="ui cards">
 
 
