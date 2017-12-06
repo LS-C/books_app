@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :authors do
     resources :books, only: [:show]
   end
-  
+
   resources :publishing_companies, only: [:index, :show, :create] do
     resources :interests, only: [:index]
   end

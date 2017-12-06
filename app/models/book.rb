@@ -10,7 +10,7 @@ class Book < ApplicationRecord
 
 
     def update_interests(publishing_company)
-        publishing_company_interested?(publishing_company) ? uninterest(publishing_company) : interest(publishing_company)
+        publishing_company_interested?(publishing_company) ? not_interested(publishing_company) : interest(publishing_company)
     end
 
     def interests_message(publishing_company)
@@ -42,7 +42,7 @@ class Book < ApplicationRecord
       self.interests.create(publishing_company_id: publishing_company.id)
     end
 
-    def unlike(publishing_company)
+    def not_interested(publishing_company)
       self.interests.find_by(publishing_company_id: publishing_company.id).destroy
     end
 
