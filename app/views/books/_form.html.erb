@@ -37,25 +37,26 @@ function submitForm(e) {
 }
 
 
-
-
 function getNewBooks() {
     const id = $('#author-id').attr('data-id')
+    let title;
     posting = $.getJSON('/authors/'+id+'book_data', function(data) {
         const book = data["books"]
         const newBook = book[book.length-1]["title"]
+        title = titleCase(newBook)
+        console.log(title)
         const id = book[book.length-1]["id"]
-        $("#authors-books").append(`<a href="/books/${id}" class="book-link">`+newBook+'</a>')
-})
-
+        $("#authors-books").append(`<div class="four wide column"><a href="/books/${id}" class="book-link">`+title+'</a></div><br/>')
+      })
 }
 
 
-
-
-
-
-
-
+function titleCase(title) {
+  if (title.indexOf(' ') === -1) {
+    return title.charAt(0).toUpperCase()+title.slice(1)
+  } else{
+    return title.split(" ").map( word => { return word.charAt(0).toUpperCase()+word.slice(1) }).join(" ")
+  }
+}
 
 </script>

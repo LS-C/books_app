@@ -1,5 +1,4 @@
 body {
-    font-family: 'Playfair Display', serif;
     margin-top: 40px;
 }
 
@@ -8,13 +7,59 @@ button {
     font-size: 14px;
 }
 
-div {
+#all-book-scripts, .ui.card, .book-title, .book-description, .book-author {
     margin-left: 20px;
+    font-family: 'Libre Franklin', sans-serif;
 }
 
 .container {
     margin-top: 80px;
+    margin-left: 40px;
 }
+
+body.welcome {
+     background-image: url('george-peabody-library.jpg');
+     background-repeat: no-repeat;
+     background-size: cover;
+}
+
+.welcome-message {
+  font-family: 'Libre Franklin', sans-serif;
+  color: #FEFFF1;
+}
+
+
+
+.book-img {
+  height: 200px;
+}
+
+.book_nav_links {
+  margin-left: 40px;
+}
+
+.welcome-client, .welcome-member, .browse-all-books, .sort-book-options {
+  text-align: center;
+}
+
+// #add-book-form-box {
+//   float: right;
+//   margin-right: 400px;
+// }
+
+#book-sort-dropdown-menu {
+  height: 25px !important;
+  font-size: 12px;
+}
+
+#add-book-form-box {
+  text-align: center;
+}
+
+.four.wide.column {
+    text-align: center;
+ }
+
 
 button {
     background-color: #699DB6;
@@ -36,7 +81,6 @@ button {
 
 .registration-shared-links {
     padding-top: 10px;
-    margin-left: 20px;
 }
 
 .book-link {

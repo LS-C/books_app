@@ -1,10 +1,80 @@
 <div class="container">
-<h1>Title: <%= @book.full_title%></h1>
-<h3>Synopsis: <%= @book.description%></h3>
 
-<h3><em>Author<em>: <%= @book.author.first_name%> <%= @book.author.last_name%></h3>
+  <div>
 
 
-<%= link_to 'next' %>
+<div class="ui items">
+<div class="item">
+   <div class="image">
+     <%= image_tag "New-York-at-Night.jpg", class: 'book-img' %>
+   </div>
+   <div class="content">
+      <h2 class="book-title" author_id="<%=current_author.id%>" book_id="<%=@book.id%>" next_book_id="">Title: <%= @book.full_title%></h2>
+     <div class="meta">
+       <p class="book-author">Author: <%= @book.author.first_name%> <%= @book.author.last_name%></p>
+     </div>
+     <div class="description">
+       <p class="book-description">Synopsis: <%= @book.description%></p>
+     </div>
+     <div class="extra">
+       Additional Details
+     </div>
+   </div>
+ </div>
 </div>
 
+
+</div>
+
+</div>
+<br>
+<br>
+<br>
+
+<div class = "book_nav_links">
+  <a href="#" id="next-book-link" >Next</a><br>
+  <%= link_to "Profile Page", current_author %>
+</div>
+
+
+
+<script type="text/javascript">
+
+  $('#next-book-link').click(function(e) {
+    e.preventDefault()
+    getNextBookId()
+    const nextBookId = parseInt($('.book-title').attr('book_id'))
+    console.log(nextBookId)
+    const authorId = $('.book-title').attr('author_id')
+    bookData = $.getJSON('/authors/'+authorId+'/book_data')
+    bookData.done(function(data) {
+      const authorData = data
+      const books = authorData["books"]
+      const nextBook = books.find( book => {
+        return book.id === nextBookId
+      })
+      nextBook.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(nextBook.title)
+      nextBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text("Synopsis: "+ nextBook.description)
+      $('.book-author').html('<em>Author: </em>'+ authorData.first_name + " " +authorData.last_name)
+    })
+  })
+
+
+
+
+function getNextBookId() {
+  const bookId = parseInt($('.book-title').attr('book_id'))
+  const authorId = $('.book-title').attr('author_id')
+  bookData = $.getJSON('/authors/'+authorId+'book_data')
+  bookData.done(function(data) {
+    const authorData = data.books
+    const justBookIds= authorData.map( book => {
+        return book.id
+    })
+    const currentBookIndex = justBookIds.indexOf(bookId)
+    const nextBookId = justBookIds[currentBookIndex + 1]
+    $('.book-title').attr('book_id', nextBookId)
+    })
+}
+
+</script>

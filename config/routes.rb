@@ -2,17 +2,16 @@ Rails.application.routes.draw do
   devise_for :publishing_companies, path: 'publishing_companies'
   devise_for :authors, path: 'authors'
 
-  # resources :publishing_companies
   resources :books
 
 
-
-  resources :authors
-  resources :publishing_companies
-
-
-
-
+  resources :authors do
+    resources :books, only: [:show]
+  end
+  
+  resources :publishing_companies, only: [:index, :show, :create] do
+    resources :interests, only: [:index]
+  end
 
 
 
@@ -21,7 +20,9 @@ Rails.application.routes.draw do
 
     get 'books/:id/book_data', to: 'books#book_data'
     get 'authors/:id/book_data', to: 'authors#book_data'
-    post '/books/:id/interest', to: 'books#interest', as: :interest
+    get 'publishing_companies/:id/interests', to: 'publishing_companies#interests'
+
+    post '/book/:id/interest' => 'books#interest', as: :interest
 
 
 

@@ -1,6 +1,5 @@
 
     <% @books.each do |book| %>
-        <div class="book <%=book.id%>" data-id=<%=book.id%>>
 
         <div class="ui card">
           <div class="content">
@@ -18,7 +17,7 @@
               <div class="book-<%=book.id%>-desciption"></div>
               <br>
              <button class="more-script-info">More Info</button>
-             <button class="confirm">Confirm</button>
+
               <div div='<%=book.id%>-interest-form'></div>
             </div>
           </div>
@@ -26,36 +25,66 @@
 
             <span class="right floated bookmark">
               <i class="bookmark icon" data-id<%=book.id%>></i>
-              Interested Content
             </span>
+
           </div>
 
+
+          <!-- start bottom-content -->
+          <div class="bottom-content">
+
+            <div class="interest">
+              <%= link_to interest_path(id: book.id), method: :post, class: 'interest-link' do %>
+
+                <div class="interest-btn text-center" book_id="<%= book.id %>">
+                  <i class="<%= book.heart_class(current_publishing_company) %>"></i>
+                </div>
+
+              <%end%>
+
+              <div id="book-<%= book.id %>-interests-message"><%= book.interests_message(current_publishing_company) %></div>
+            </div> <!-- end interest -->
+
+
+
+          </div> <!-- end bottom-content -->
+
         </div>
-        </div>
+        <%end%>
         <br><br>
-    <%end%>
     <br>
     <br>
 
-
-
-    <%#= render 'interests/form', :book => book, locals: {url: interests_path(@interest), method: :post}  %>
 
 <script type="text/javascript">
 
     $('.more-script-info').click(function() {
         const id = $(this).parent().attr('data-id');
         posting = $.getJSON('/books/'+id+'.json', function(data) {
-            const book = data
-            $(`.book-${id}-desciption`).text(data["description"])
+          const book = data
+          $(`.book-${id}-desciption`).text(data["description"])
         })
     })
 
-    $('.confirm').click(function() {
-        const id = $(this).parent().attr('data-id')
-        console.log(id)
 
+    $('.interest-link').click(function(e) {
+      e.stopPropagation()
+      e.preventDefault()
+      const url = $(this).attr('href')
+      const $heart = $(this).children().children()
+      const bookId = $(this).find($("div[book_id]")).attr("book_id")
+      $.ajax({
+        method: 'POST',
+        url: url,
+        dataType: 'json',
+        success: function(data) {
+          const newInterest = data["heart_class"]
+          $heart.attr('class', newInterest)
+          $('#book-'+bookId+'-interests-message').html(data["interests_message"])
+        }
+      })
     })
+
 
 
 
