@@ -37,8 +37,10 @@
     <%= link_to "Profile Page", current_author %>
   </div>
 <% else %>
-  <div class="interested-books-list" data=id= <%=current_publishing_company.id%> ></div>
-  <a href="#" id="interested-book-link" >Next Book</a><br>
+  <div class="interested-books-list" data=id= <%=current_publishing_company.id%> >
+    <a href="#" id="interested-book-link" >Next Book</a><br>
+    <%= link_to "Bakc to Account", current_publishing_company %>
+  </div>
 <%end%>
 
 
@@ -84,42 +86,43 @@ function getNextBookId() {
 }
 
 
-  $('#interested-book-link').click(function(e) {
-    e.preventDefault()
-    getNextInterestedBookId()
-    const nextBookId = parseInt($('.book-title').attr('book_id'))
-    console.log(nextBookId)
-    const authorId = $('.book-title').attr('author_id')
-    bookData = $.getJSON('/authors/'+authorId+'/book_data')
-    bookData.done(function(data) {
-      const authorData = data
-      const books = authorData["books"]
-      const nextBook = books.find( book => {
-        return book.id === nextBookId
-      })
-      nextBook.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(nextBook.title)
-      nextBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text("Synopsis: "+ nextBook.description)
-      $('.book-author').html('<em>Author: </em>'+ authorData.first_name + " " +authorData.last_name)
-    })
-  })
-
-  function getNextInterestedBookId() {
-    const bookId = parseInt($('.book-title').attr('book_id'))
-    const company_id = $('.interested-books-list').attr('data-id')
-    bookData = $.getJSON('/publishing_companies/'+company_id+'/interests')
-    bookData.done(function(data) {
-      console.log
-      // const authorData = data.books
-      // const justBookIds= authorData.map( book => {
-      //     return book.id
-      // })
-      // const currentBookIndex = justBookIds.indexOf(bookId)
-      // const nextBookId = justBookIds[currentBookIndex + 1]
-      // $('.book-title').attr('book_id', nextBookId)
-      // })
-  })
-}
-
+//   $('#interested-book-link').click(function(e) {
+//     e.preventDefault()
+//     getNextInterestedBookId()
+//     const nextBookId = parseInt($('.book-title').attr('book_id'))
+//     const company_id = $('.interested-books-list').attr('data-id')
+//     const authorId = $('.book-title').attr('author_id')
+//     bookData = $.getJSON('/publishing_companies/'+company_id+'/interests')
+//     bookData.done(function(data) {
+//       const authorData = data
+//       const books = authorData.map( book => {
+//         return book.book
+//       })
+//       const nextBook = books.find( book => {
+//         return book.id === nextBookId
+//       })
+//       nextBook.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(nextBook.title)
+//       nextBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text("Synopsis: "+ nextBook.description)
+//       $('.book-author').html('<em>Author: </em>'+ authorData.first_name + " " +authorData.last_name)
+//     })
+//   })
+//
+//   function getNextInterestedBookId() {
+//     const bookId = parseInt($('.book-title').attr('book_id'))
+//     const company_id = $('.interested-books-list').attr('data-id')
+//     bookData = $.getJSON('/publishing_companies/'+company_id+'/interests')
+//     bookData.done(function(data) {
+//       const books = data
+//       const justBookIds= books.map( book => {
+//           return book.id
+//       })
+//       console.log(justBookIds)
+//       const currentBookIndex = justBookIds.indexOf(bookId)
+//       const nextBookId = justBookIds[currentBookIndex + 1]
+//       $('.book-title').attr('book_id', nextBookId)
+//   })
+// }
+//
 
 
 
