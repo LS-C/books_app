@@ -40,7 +40,9 @@
 <br>
 <br>
 
+<div id="interested-books">
 
+</div>
 
 <script type="text/javascript">
 
@@ -54,19 +56,21 @@ function loadScriptsData() {
 
 $('#interests-book-btn').click(function() {
   const authorId = $('.welcome-client').attr('author_id')
+  let title;
   console.log(authorId)
   request = $.getJSON('/publishing_companies/'+authorId+'/interests')
   request.done(function(data) {
     const books = data
-    console.log(data)
-    const interestedBooks = books.map( book => {
-      return book.book_id
+    const interestedBooks = books.map(book => {
+      title = book.book.title === "" ? '<em>untitled</em>' : book.book.title
+      return `<div class="four-column-grid"><a href="/books/${book.book.id}" class="book-link" >`+title+'</a></div><br/>'
     })
-    console.log(interestedBooks)
       $('#all-book-scripts').empty()
-      $('#all-book-scripts').append("<%= j render 'books/index' %>")
+      $('#interested-books').append(interestedBooks)
   })
 })
+
+
 
 
 </script>
