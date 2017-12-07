@@ -3,7 +3,7 @@ class InterestsController < ApplicationController
 
     def index
       @publishing_company = current_publishing_company
-      @interests = @publishing_company.interests
+      @interests = Interest.all
       render json: @interests
     end
 
