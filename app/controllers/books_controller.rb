@@ -9,8 +9,10 @@ class BooksController < ApplicationController
         end
     end
 
+
     def show
         @book = Book.find(params[:id])
+        @author = current_author
         respond_to do |format|
           format.html { render :show }
           format.json { render json: @book }
@@ -24,6 +26,21 @@ class BooksController < ApplicationController
     def create
         @book = Book.create(book_params)
         render json: @book
+    end
+
+    def edit
+      @book = Book.find(params[:id])
+      @author = current_author
+    end
+
+    def update
+      @book = Book.find(params[:id])
+      @author = current_author
+      @book.update(book_params)
+      respond_to do |format|
+        format.html { render :show }
+        format.json { render json: @book }
+      end
     end
 
     def book_data

@@ -12,6 +12,7 @@
        <p class="book-author">Author: <%= @book.author.first_name%> <%= @book.author.last_name%></p>
      </div>
      <div class="description">
+       <p class="book-category">Category: <%= @book.category%></p>
        <p class="book-description">Synopsis: <%= @book.description%></p>
      </div>
      <div class="extra">
@@ -35,12 +36,22 @@
     <%= link_to "Profile Page", current_author %>
   </div>
 
+  <button id="edit" name="button">Edit Book</button>
+  <div class="edit-form" id='edit-form'>
+    <%= render 'form'%>
+  </div>
 
 
-
+  <!-- <%#= render 'form', locals: { author: current_author }%> -->
 
 
 <script type="text/javascript">
+
+  $('#edit').click(function() {
+    $('#edit-form').show()
+  })
+
+
 
   $('#next-book-link').click(function(e) {
     e.preventDefault()
@@ -63,7 +74,6 @@
 
 
 
-
 function getNextBookId() {
   const bookId = parseInt($('.book-title').attr('book_id'))
   const authorId = $('.book-title').attr('author_id')
@@ -79,7 +89,7 @@ function getNextBookId() {
     })
 }
 
-
+//
 //   $('#interested-book-link').click(function(e) {
 //     e.preventDefault()
 //     getNextInterestedBookId()

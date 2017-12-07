@@ -10,6 +10,9 @@
     <%= f.submit "Submit" %>
 <%end%>
 <p id="author-id" data-id=<%=@author.id%>></div>
+<% if @book %>
+  <p id="book-id" data-id=<%=@book.id%>></div>
+<%end%>
 
 <script type="text/javascript">
 
@@ -24,16 +27,34 @@
 function submitForm(e) {
         e.preventDefault()
         const id = $('#author-id').attr('data-id')
-        console.log('this is working here')
+        const bookId = $('#book-id').attr('data-id')
+        let url;
+        let method;
+
+        if (bookId==="") {
+          url = '/books'
+          method = 'post'
+        } else {
+          url = `/books/${bookId}`
+          method = 'patch'
+        }
+
         const values = $(this).serialize()
-        console.log(values)
-        posting = $.post('/books', values)
-        .done(function(values) {
-            getNewBooks()
-            $('form').trigger('reset')
-            $('#book-form').empty()
+
+        $.ajax({
+          method: method,
+          url: url,
+          data: values,
+          dataType: "json"
         })
-        console.log('done')
+        .done(function(data) {
+          const updatedBook = data
+          updatedBook.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text("Title: " + updatedBook.title)
+          updatedBook.category ==="" ? $('.book-category').text('untitled') :   $('.book-category').text("Category: " + updatedBook.category)
+          updatedBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text("Synopsis: "+ updatedBook.description)
+           $('.field').val("")
+           $('form').hide()
+        });
 }
 
 

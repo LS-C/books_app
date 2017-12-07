@@ -29,6 +29,9 @@ body.welcome {
   color: #FEFFF1;
 }
 
+#edit-form {
+  display: none;
+}
 
 .book-img {
   height: 200p;
@@ -61,12 +64,13 @@ body.welcome {
     text-align: center;
  }
 
-// body.author {
-//     background-image: url('library_2.jpg');
-//     background-repeat: repeat;
-//     background-size: cover;
-// }
+.heart.icon {
+  color: red;
+}
 
+.empty.heart.icon {
+  color: grey;
+}
 
 button {
     background-color: #699DB6;
