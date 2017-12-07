@@ -52,8 +52,10 @@
 
 
 $('#load-scripts-button').click(loadScriptsData)
+
 function loadScriptsData() {
-    $('#all-book-scripts').append("<%= j render 'books/index' %>")
+    $('#interested-books').empty()
+    $('#all-book-scripts').html("<%= j render 'books/index' %>")
 }
 
 
@@ -61,14 +63,12 @@ function loadScriptsData() {
 $('#interests-book-btn').click(function() {
   const authorId = $('.welcome-client').attr('author_id')
   let title;
-  console.log(authorId)
   request = $.getJSON('/publishing_companies/'+authorId+'/interests')
   request.done(function(data) {
     const books = data
     const interestedBooks = books.map(book => {
       return returnCard(book.book)
     })
-    console.log(interestedBooks)
       $('#all-book-scripts').empty()
       $('#interested-books').append(interestedBooks)
   })
@@ -85,11 +85,12 @@ function returnCard(data) {
           </div>
         </div>
         <div class="ui bottom attached button">
-        <i class="add icon"></i>
+        <i class="mail outline icon"></i>
         Message Author
       </div>
     </div>`
 }
+
 
 
 

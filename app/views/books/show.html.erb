@@ -30,17 +30,12 @@
 <br>
 <br>
 
-<% if current_author %>
   <div class = "book_nav_links">
     <a href="#" id="next-book-link" >Next</a><br>
     <%= link_to "Profile Page", current_author %>
   </div>
-<% else %>
-  <div class="interested-books-list" data=id= <%=current_publishing_company.id%> >
-    <a href="#" id="interested-book-link" >Next Book</a><br>
-    <%= link_to "Back to Account", current_publishing_company %>
-  </div>
-<%end%>
+
+
 
 
 
