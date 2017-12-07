@@ -40,9 +40,13 @@
 <br>
 <br>
 
-<div id="interested-books">
+  <div id="book-card" class="ui grid">
 
-</div>
+    <div id="interested-books" class="ui cards">
+
+    </div>
+
+  </div>
 
 <script type="text/javascript">
 
@@ -62,13 +66,30 @@ $('#interests-book-btn').click(function() {
   request.done(function(data) {
     const books = data
     const interestedBooks = books.map(book => {
-      title = book.book.title === "" ? '<em>untitled</em>' : book.book.title
-      return `<div class="four-column-grid"><a href="/books/${book.book.id}" class="book-link" >`+title+'</a></div><br/>'
+      return returnCard(book.book)
     })
+    console.log(interestedBooks)
       $('#all-book-scripts').empty()
       $('#interested-books').append(interestedBooks)
   })
 })
+
+
+function returnCard(data) {
+  const book = data
+  return `<div class="card">
+      <div class="content">
+        <div class="header">${book.title}</div>
+          <div class="description">
+          ${book.description}
+          </div>
+        </div>
+        <div class="ui bottom attached button">
+        <i class="add icon"></i>
+        Message Author
+      </div>
+    </div>`
+}
 
 
 
