@@ -1,5 +1,4 @@
 <div class="container">
-  <button id="btn" name="button">test button</button>
   <div class="welcome-member">
 
     <% if @author.first_name %>
@@ -22,6 +21,15 @@
     </select>
 
 </div>
+
+<br>
+    <div id="book-search-bar" class="ui right aligned category search">
+      <div class="ui icon input">
+        <input class="prompt" type="text" placeholder="Find by title/category">
+        <i class="search icon"></i>
+      </div>
+      <div class="results"></div>
+    </div>
 
 <br>
 <br>
@@ -52,13 +60,35 @@
 
 $(function() {
 
-  getCurrentBooks()
-
-
+    getCurrentBooks()
 
     $('#add-book').click(renderForm)
 
+    $('.prompt').keypress(function(e) {
+      const searchTerm = $(this).val()
+      const authorId=$("#authors-books").attr('data-id')
+      if (e.which === 13) {
+        posting = $.getJSON('/authors/'+authorId+'/book_data')
+        posting.done(function(data) {
+          const books = data["books"]
+          const searchedBooks = books.filter(book => {
+            return book.title === searchTerm || book.category === searchTerm
+          })
+          const selectedBooks = searchedBooks.map(book => {
+              title = book.title === "" ? '<em>untitled</em>' : titleCase(book.title)
+              return returnCard(book)
+          })
+          $("#authors-books").empty()
+          selectedBooks.forEach( book => {
+              $("#authors-books").append(book)
+          })
+        })
+      }
 })
+
+
+})
+
 
 
 $('.ui.search.dropdown').change(function() {
@@ -160,7 +190,6 @@ function returnCard(data) {
     </div>
   </div>`
 }
-
 
 
 
