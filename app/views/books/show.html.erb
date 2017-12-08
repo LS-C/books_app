@@ -72,10 +72,11 @@ $(function() {
 })
 
 
+    $('#edit').click(function() {
+      // $('#edit-form1').css({ display: 'block' })
+      $('#edit-form1').show()
+    })
 
-    //
-    // $('#edit').click(renderForm)
-    //
     //
     // function renderForm() {
     //         $('#edit-form1').html("<%= j render partial: 'books/form'%>")
@@ -96,16 +97,18 @@ $(function() {
       .done(function(data) {
         console.log(data)
         const updatedBook = data
+        updatedBook.title
         updatedBook.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(updatedBook.title)
         updatedBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text("Synopsis: "+ updatedBook.description)
-        updatedBook.category === "" ? $('.book-title').text('need category') :   $('.book-title').text(updatedBook.title)
+        updatedBook.category === "" ? $('.book-category').text('need category') :   $('.book-category').text(updatedBook.category)
         $('input#book_title').val(updatedBook.title)
         $('textarea#book_description').val(updatedBook.description)
         $('input#book_category').val(updatedBook.category)
         $('form#edit_book input:submit').prop('disabled',false);
 
-
       })
+      // $('#edit-form1').css({ display: 'none' })
+      $('#edit-form1').hide()
     })
 
 
@@ -196,12 +199,6 @@ function getNextBookId() {
 //   })
 // }
 //
-
-
-
-
-
-
 
 
 </script>
