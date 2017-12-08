@@ -54,7 +54,7 @@
         <textarea class="field" name="book[description]" id="book_description" value="<%=@book.description%>"><%=@book.description%></textarea><br>
         <input value="1" type="hidden" name="book[author_id]" id="book_author_id">
 
-        <input type="submit" name="commit" value="Submit" data-disable-with="Submit">
+        <input id="1" type="submit" name="commit" value="Submit" data-disable-with="Submit">
       </form>
 
     <!-- </script> -->
@@ -102,6 +102,8 @@ $(function() {
         $('input#book_title').val(updatedBook.title)
         $('textarea#book_description').val(updatedBook.description)
         $('input#book_category').val(updatedBook.category)
+        $('form#edit_book input:submit').prop('disabled',false);
+
 
       })
     })
