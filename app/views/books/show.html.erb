@@ -51,7 +51,7 @@
         <label for="book_category">Category</label><br>
         <input class="field" type="text" value="<%=@book.category%>" name="book[category]" id="book_category"><br>
         <label for="book_description">Description</label><br>
-        <textarea class="field" name="book[description]" id="book_description"><%=@book.description%></textarea><br>
+        <textarea class="field" name="book[description]" id="book_description" value="<%=@book.description%>"><%=@book.description%></textarea><br>
         <input value="1" type="hidden" name="book[author_id]" id="book_author_id">
 
         <input type="submit" name="commit" value="Submit" data-disable-with="Submit">
@@ -72,6 +72,7 @@ $(function() {
 })
 
 
+
     //
     // $('#edit').click(renderForm)
     //
@@ -80,6 +81,31 @@ $(function() {
     //         $('#edit-form1').html("<%= j render partial: 'books/form'%>")
     // }
     //
+
+    $('form#edit_book').submit(function(e) {
+      e.preventDefault()
+      const url = $(this).attr('action')
+      console.log(url)
+      const params = $(this).serialize()
+
+      $.ajax({
+        method: "patch",
+        url: url,
+        data: params
+      })
+      .done(function(data) {
+        console.log(data)
+        const updatedBook = data
+        updatedBook.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(updatedBook.title)
+        updatedBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text("Synopsis: "+ updatedBook.description)
+        updatedBook.category === "" ? $('.book-title').text('need category') :   $('.book-title').text(updatedBook.title)
+        $('input#book_title').val(updatedBook.title)
+        $('textarea#book_description').val(updatedBook.description)
+        $('input#book_category').val(updatedBook.category)
+
+      })
+    })
+
 
 
 
@@ -107,7 +133,7 @@ $(function() {
       $('form#edit_book').attr('action',"/books/"+ nextBook.id )
       console.log($('form#edit_book').attr('action'))
       $('input#book_title').val(nextBook.title)
-      $('textarea#book_description').text(nextBook.description)
+      $('textarea#book_description').val(nextBook.description)
       $('input#book_category').val(nextBook.category)
 
     })
