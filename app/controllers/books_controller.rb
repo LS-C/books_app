@@ -35,12 +35,8 @@ class BooksController < ApplicationController
 
     def update
       @book = Book.find(params[:id])
-      @author = current_author
       @book.update(book_params)
-      respond_to do |format|
-        format.html { render :show }
-        format.json { render json: @book }
-      end
+        render json: @book
     end
 
     def book_data
