@@ -13,7 +13,11 @@ $(function() {
       data: params,
     })
     .done(function(data) {
-      console.log(data)
+      const updatedBook = data
+      updatedBook.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(updatedBook.title)
+      updatedBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text("Synopsis: "+ updatedBook.description)
+      updatedBook.category === "" ? $('.book-title').text('need category') :   $('.book-title').text(updatedBook.title)
+      $('form#edit_book')[0].reset();
     })
   })
 
