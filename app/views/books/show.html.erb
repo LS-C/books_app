@@ -47,7 +47,7 @@
         <input type="hidden" name="_method" value="patch">
         <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
         <label for="book_title">Title</label><br>
-        <input class="field" type="text" value="painting" name="book[title]" id="book_title"><br>
+        <input class="field" type="text" value="<%=@book.title%>" name="book[title]" id="book_title"><br>
         <label for="book_category">Category</label><br>
         <input class="field" type="text" value="<%=@book.category%>" name="book[category]" id="book_category"><br>
         <label for="book_description">Description</label><br>
@@ -68,8 +68,10 @@
 $(function() {
 
   getNextBookId()
-  
+
 })
+
+
     //
     // $('#edit').click(renderForm)
     //
@@ -97,6 +99,9 @@ $(function() {
       })
       console.log(nextBook)
       nextBook.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(nextBook.title)
+      nextBook.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(nextBook.title)
+      nextBook.category ==="" ? $('.book-category').text('need category') :   $('.book-category').text(nextBook.category)
+
       nextBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text("Synopsis: "+ nextBook.description)
       $('.book-author').html('<em>Author: </em>'+ authorData.first_name + " " +authorData.last_name)
       $('form#edit_book').attr('action',"/books/"+ nextBook.id )
