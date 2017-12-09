@@ -15,8 +15,14 @@
 
 
   <% if signed_in? %>
-      <%= link_to @current_user do %>
+      <% if current_author %>
+        <%= link_to current_author do %>
         <i class="item">Profile</i>
+        <%end%>
+      <% else %>
+        <%= link_to current_publishing_company do %>
+        <i class="item">Profile</i>
+        <%end%>
       <%end%>
       <%= link_to(destroy_author_session_path, :method=>'delete') do %>
           <i class="item">Logout</i>

@@ -1,5 +1,15 @@
 body {
-    margin-top: 40px;
+  margin-top: 40px;
+}
+
+// * {
+//   font-family: 'Libre Franklin', sans-serif !important;;
+// }
+
+
+@font-face  {
+    font-family: 'Libre Franklin', sans-serif;
+
 }
 
 
@@ -8,9 +18,8 @@ button {
     font-size: 14px;
 }
 
-#all-book-scripts, .ui.card, .book-title, .book-description, .book-author, #interested-books {
+#all-book-scripts, .ui.card, .book-title, .book-description, .book-author, #interested-books, .book_nav_links {
     margin-left: 20px;
-    font-family: 'Libre Franklin', sans-serif;
 }
 
 .container {
@@ -38,7 +47,7 @@ body.welcome {
   width: 400px;
 }
 
-.book_nav_links, .interested-books-list {
+.interested-books-list, #edit-form1 {
   margin-left: 40px;
 }
 

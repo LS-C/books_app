@@ -10,24 +10,29 @@
     <%end%>
 
   </div>
+  <br>
+  <br>
+
 
 <div class="sort-book-options">
 
-  <h3>Your Script Inventory</h3>
+  <button id="script-button">view your scripts</button> <br><br>
 
-    <select id="book-sort-dropdown-menu" class="ui search dropdown"  >
-      <option value="">Sort By</option>
-      <option value="AZ">Books A-Z</option>
-      <option value="ZA">Books Z-A</option>
-      <option value="AZ">Recent Books</option>
-    </select>
+    <h3>Your Script Inventory</h3>
+
+      <select id="book-sort-dropdown-menu" class="ui search dropdown"  >
+        <option value="">Sort By</option>
+        <option value="AZ">Books A-Z</option>
+        <option value="ZA">Books Z-A</option>
+        <option value="AZ">Recent Books</option>
+      </select>
 
 </div>
 
 <br>
     <div id="book-search-bar" class="ui right aligned category search">
       <div class="ui icon input">
-        <input class="prompt" type="text" placeholder="Find by title/category">
+        <input class="prompt" type="text" placeholder="Search by title/category">
         <i class="search icon"></i>
       </div>
       <div class="results"></div>
@@ -86,8 +91,8 @@ function submitForm(e) {
 
 $(function() {
 
-  getCurrentBooks()
 
+  $('#script-button').click(getCurrentBooks)
 
   $('.ui.search.dropdown').change(function() {
     const searchOption= ($( ".ui.search.dropdown option:selected").text());
@@ -120,7 +125,7 @@ $(function() {
       posting.done(function(data) {
         const books = data["books"]
         const searchedBooks = books.filter(book => {
-          return book.title === searchTerm || book.category === searchTerm
+          return book.title.includes(searchTerm) || book.category.includes(searchTerm)
         })
         const selectedBooks = searchedBooks.map(book => {
           title = book.title === "" ? '<em>untitled</em>' : titleCase(book.title)
@@ -130,8 +135,10 @@ $(function() {
         selectedBooks.forEach( book => {
           $("#authors-books").append(book)
         })
+        $('.prompt').val("")
       })
     }
+
   })
 
 })

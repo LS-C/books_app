@@ -1,13 +1,22 @@
 <div class="container">
 
 
+
+  <div class = "book_nav_links">
+
+    <a href="#" id="next-book-link" style="display: inline">Next</a><br>
+
+    <%= link_to "Profile Page", current_author, style:'display:inline' %><br><br>
+
+  </div>
+
 <div class="ui items">
 <div class="item">
    <div class="image">
        <%= image_tag "NY At Night.jpg" %>
    </div>
    <div class="content">
-      <h2 class="book-title" author_id="<%=@book.author.id%>" book_id="<%=@book.id%>" next_book_id="">Title: <%= @book.full_title%></h2>
+     <h2 class="book-title" author_id="<%=@book.author.id%>" prev_book_id="" book_id="<%=@book.id%>" next_book_id="">Title: <%= @book.full_title%></h2>
      <div class="meta">
        <p class="book-author">Author: <%= @book.author.first_name%> <%= @book.author.last_name%></p>
      </div>
@@ -22,21 +31,14 @@
  </div>
 </div>
 
-
+<button id="edit" name="button">Edit Book</button>
 </div>
 
 
 
-<br>
-<br>
-<br>
+  <br>
+  <br>
 
-  <div class = "book_nav_links">
-    <a href="#" id="next-book-link" >Next</a><br>
-    <%= link_to "Profile Page", current_author %>
-  </div>
-
-  <button id="edit" name="button">Edit Book</button>
 
 
   <div class="edit-form" id='edit-form1'>
@@ -46,12 +48,18 @@
       <form class="ui form" id="edit_book" action="/books/<%=@book.id%>" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓">
         <input type="hidden" name="_method" value="patch">
         <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <div class="six wide field">
         <label for="book_title">Title</label><br>
         <input class="field" type="text" value="<%=@book.title%>" name="book[title]" id="book_title"><br>
+        </div>
+        <div class="six wide field">
         <label for="book_category">Category</label><br>
         <input class="field" type="text" value="<%=@book.category%>" name="book[category]" id="book_category"><br>
+        </div>
+        <div class="ten wide field">
         <label for="book_description">Description</label><br>
         <textarea class="field" name="book[description]" id="book_description" value="<%=@book.description%>"><%=@book.description%></textarea><br>
+        </div>
         <input value="1" type="hidden" name="book[author_id]" id="book_author_id">
 
         <input id="1" type="submit" name="commit" value="Submit" data-disable-with="Submit">
@@ -71,10 +79,9 @@ $(function() {
 
 })
 
-
     $('#edit').click(function() {
       // $('#edit-form1').css({ display: 'block' })
-      $('#edit-form1').show()
+      $('#edit-form1').fadeIn('1000')
     })
 
     //
@@ -86,7 +93,6 @@ $(function() {
     $('form#edit_book').submit(function(e) {
       e.preventDefault()
       const url = $(this).attr('action')
-      console.log(url)
       const params = $(this).serialize()
 
       $.ajax({
@@ -95,31 +101,20 @@ $(function() {
         data: params
       })
       .done(function(data) {
-        console.log(data)
         const updatedBook = data
-        updatedBook.title
-        updatedBook.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(updatedBook.title)
-        updatedBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text("Synopsis: "+ updatedBook.description)
-        updatedBook.category === "" ? $('.book-category').text('need category') :   $('.book-category').text(updatedBook.category)
-        $('input#book_title').val(updatedBook.title)
-        $('textarea#book_description').val(updatedBook.description)
-        $('input#book_category').val(updatedBook.category)
+        bookShowCard(updatedBook)
+        syncEditForm(updatedBook)
         $('form#edit_book input:submit').prop('disabled',false);
 
       })
-      // $('#edit-form1').css({ display: 'none' })
-      $('#edit-form1').hide()
+      $('#edit-form1').fadeOut('1000')
     })
-
-
-
 
 
   $('#next-book-link').click(function(e) {
     e.preventDefault()
     getNextBookId()
     const nextBookId = parseInt($('.book-title').attr('book_id'))
-    console.log(nextBookId)
     const authorId = $('.book-title').attr('author_id')
     bookData = $.getJSON('/authors/'+authorId+'/book_data')
     bookData.done(function(data) {
@@ -128,22 +123,28 @@ $(function() {
       const nextBook = books.find( book => {
         return book.id === nextBookId
       })
-      console.log(nextBook)
-      nextBook.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(nextBook.title)
-      nextBook.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(nextBook.title)
-      nextBook.category ==="" ? $('.book-category').text('need category') :   $('.book-category').text(nextBook.category)
-
+      bookShowCard(nextBook)
+      syncEditForm(nextBook)
       nextBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text("Synopsis: "+ nextBook.description)
       $('.book-author').html('<em>Author: </em>'+ authorData.first_name + " " +authorData.last_name)
       $('form#edit_book').attr('action',"/books/"+ nextBook.id )
-      console.log($('form#edit_book').attr('action'))
-      $('input#book_title').val(nextBook.title)
-      $('textarea#book_description').val(nextBook.description)
-      $('input#book_category').val(nextBook.category)
 
     })
   })
 
+
+
+function bookShowCard(book) {
+    book.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(book.title)
+    book.description ==="" ? $('.book-description').text('need category') :   $('.book-description').text(book.description)
+    book.category ==="" ? $('.book-category').text('need category') :   $('.book-category').text(book.category)
+}
+
+function syncEditForm(book) {
+    $('input#book_title').val(book.title)
+    $('textarea#book_description').val(book.description)
+    $('input#book_category').val(book.category)
+}
 
 
 function getNextBookId() {
@@ -160,6 +161,14 @@ function getNextBookId() {
     $('.book-title').attr('book_id', nextBookId)
     })
 }
+
+
+
+
+
+
+
+
 
 //
 //   $('#interested-book-link').click(function(e) {

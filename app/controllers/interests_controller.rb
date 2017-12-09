@@ -3,7 +3,7 @@ class InterestsController < ApplicationController
 
     def index
       @publishing_company = current_publishing_company
-      @interests = Interest.all
+      @interests = @publishing_company.interests
       render json: @interests
     end
 
@@ -14,10 +14,7 @@ class InterestsController < ApplicationController
     def new
     end
 
-    # def create
-    #     @interest = Interest.create(interest_params)
-    #       render json: @interest
-    # end
+
 
     private
     def interest_params
