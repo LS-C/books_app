@@ -24,7 +24,7 @@
         <option value="">Sort By</option>
         <option value="AZ">Books A-Z</option>
         <option value="ZA">Books Z-A</option>
-        <option value="AZ">Recent Books</option>
+        <option value="AZ">Recent Uploads</option>
       </select>
 
 </div>
@@ -103,11 +103,16 @@ $(function() {
     posting = $.getJSON('/authors/'+authorId+'/book_data')
     posting.done(function(data) {
       const books = data["books"]
-      if (searchOption === "Books A-Z") {
+      if (searchOption === "Sort By") {
+        getCurrentBooks()
+      } else if (searchOption === "Books A-Z") {
         sortedBooks = sortBookAsc(books)
       } else if (searchOption === "Books Z-A") {
         sortedBooks = sortBookDesc(books)
+      } else if (searchOption === "Recent Uploads") {
+        sortedBooks = sortBookRecent(books)
       }
+      console.log(sortedBooks)
       const authorBooks = sortedBooks.map(book => {
         title = book.title === "" ? '<em>untitled</em>' : titleCase(book.title)
         return displayCard(book)
@@ -173,6 +178,19 @@ function sortBookDesc(data) {
             return b.title.localeCompare(a.title);
       })
 }
+
+function sortBookRecent(data) {
+    const d = data
+    console.log(d)
+    return d.sort(function(a, b) {
+      a = new Date(a.created_at);
+      b = new Date(b.created_at);
+      return a>b ? -1 : a<b ? 1 : 0;
+    })
+
+};
+
+
 
 function refreshPageWithSortBooks(data) {
     $("#authors-books").empty()
