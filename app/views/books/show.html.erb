@@ -32,6 +32,7 @@
 </div>
 
 <button id="edit" name="button">Edit Book</button>
+<button id='test-button' name="button">TESTING</button>
 
 
 
@@ -70,7 +71,12 @@
 
   </div>
 </div>
-  <!-- <%#= render 'form', locals: { author: current_author }%> -->
+
+
+
+
+
+
 
 <script type="text/javascript">
 
@@ -110,6 +116,7 @@ $(function() {
 
   $('#next-book-link').click(function(e) {
     e.preventDefault()
+    $('#edit-form1').fadeOut('fast')
     getNextBookId()
     const nextBookId = parseInt($('.book-title').attr('book_id'))
     const authorId = $('.book-title').attr('author_id')
@@ -173,24 +180,6 @@ function getPreviousBookId() {
     $('.book-title').attr('book_id', nextBookId)
     })
 }
-
-
-
-$('#2').click(function(e) {
-  e.preventDefault()
-  console.log("hi")
-  const url = $(this).attr('action')
-
-  $.ajax({
-    method: "DELETE",
-    url: url
-  })
-  .done(function(data) {
-    console.log(data)
-    $('form#edit_book input:submit').prop('disabled',false);
-  })
-  $('#edit-form1').fadeOut('1000')
-})
 
 
 
