@@ -32,7 +32,7 @@
 </div>
 
 <button id="edit" name="button">Edit Book</button>
-</div>
+
 
 
 
@@ -63,12 +63,13 @@
         <input value="1" type="hidden" name="book[author_id]" id="book_author_id">
 
         <input id="1" type="submit" name="commit" value="Submit" data-disable-with="Submit">
+        <input id="2"class="destroy" type="submit" value="Delete Book From Inventory">
       </form>
 
     <!-- </script> -->
 
   </div>
-
+</div>
   <!-- <%#= render 'form', locals: { author: current_author }%> -->
 
 <script type="text/javascript">
@@ -84,11 +85,7 @@ $(function() {
       $('#edit-form1').fadeIn('1000')
     })
 
-    //
-    // function renderForm() {
-    //         $('#edit-form1').html("<%= j render partial: 'books/form'%>")
-    // }
-    //
+
 
     $('form#edit_book').submit(function(e) {
       e.preventDefault()
@@ -162,8 +159,38 @@ function getNextBookId() {
     })
 }
 
+function getPreviousBookId() {
+  const bookId = parseInt($('.book-title').attr('book_id'))
+  const authorId = $('.book-title').attr('author_id')
+  bookData = $.getJSON('/authors/'+authorId+'book_data')
+  bookData.done(function(data) {
+    const authorData = data.books
+    const justBookIds= authorData.map( book => {
+        return book.id
+    })
+    const currentBookIndex = justBookIds.indexOf(bookId)
+    const nextBookId = justBookIds[currentBookIndex - 1]
+    $('.book-title').attr('book_id', nextBookId)
+    })
+}
 
 
+
+$('#2').click(function(e) {
+  e.preventDefault()
+  console.log("hi")
+  const url = $(this).attr('action')
+
+  $.ajax({
+    method: "DELETE",
+    url: url
+  })
+  .done(function(data) {
+    console.log(data)
+    $('form#edit_book input:submit').prop('disabled',false);
+  })
+  $('#edit-form1').fadeOut('1000')
+})
 
 
 

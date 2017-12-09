@@ -180,9 +180,8 @@ function sortBookDesc(data) {
 }
 
 function sortBookRecent(data) {
-    const d = data
-    console.log(d)
-    return d.sort(function(a, b) {
+    const books = data
+    return books.sort(function(a, b) {
       a = new Date(a.created_at);
       b = new Date(b.created_at);
       return a>b ? -1 : a<b ? 1 : 0;

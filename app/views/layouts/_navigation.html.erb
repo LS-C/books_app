@@ -1,37 +1,28 @@
-
-
-<div class="ui top fixed menu">
+<div id="vertical-menubar" class="ui left fixed vertical menu" >
   <div class="item">
     <i id="nav-logo" class="world icon"></i>
   </div>
-    <a href="/" class="item">Home </a>
-
-
-  <% if !signed_in? %>
-    <a href="/publishing_companies/sign_in" class="item">Clients Sign-in</a>
-    <a href="/authors/sign_in" class="item">Members Sign-in</a>
-  <%end%>
+  <a href="/" class="item">Home </a>
+    <% if !signed_in? %>
+      <a href="/publishing_companies/sign_in" class="item">Clients Sign-in</a>
+      <a href="/authors/sign_in" class="item">Members Sign-in</a>
+    <%end%>
 
 
 
-  <% if signed_in? %>
-      <% if current_author %>
-        <%= link_to current_author do %>
-        <i class="item">Profile</i>
+    <% if signed_in? %>
+        <% if current_author %>
+          <%= link_to current_author do %>
+          <i class="item">Profile</i>
+          <%end%>
+        <% else %>
+          <%= link_to current_publishing_company do %>
+          <i class="item">Profile</i>
+          <%end%>
         <%end%>
-      <% else %>
-        <%= link_to current_publishing_company do %>
-        <i class="item">Profile</i>
-        <%end%>
-      <%end%>
-      <%= link_to(destroy_author_session_path, :method=>'delete') do %>
-          <i class="item">Logout</i>
-      <% end %>
-  <% end%>
+        <%= link_to(destroy_author_session_path, :method=>'delete') do %>
+            <i class="item">Logout</i>
+        <% end %>
+    <% end%>
 
-
-</div>
-
-<p></p>
-<p></p>
 </div>

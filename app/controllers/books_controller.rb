@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
     before_action :authenticate_client!
+    before_action :set_book, only: [:show, :edit, :update, :destroy]
 
     def index
         @books = Book.all
@@ -11,7 +12,6 @@ class BooksController < ApplicationController
 
 
     def show
-        @book = Book.find(params[:id])
         @author = current_author
         respond_to do |format|
           format.html { render :show }
@@ -29,14 +29,18 @@ class BooksController < ApplicationController
     end
 
     def edit
-      @book = Book.find(params[:id])
       @author = current_author
     end
 
     def update
-      @book = Book.find(params[:id])
       @book.update(book_params)
         render json: @book
+    end
+
+    def destroy
+      @books = Book.all
+      @book.delete
+      render json: @book
     end
 
     def book_data
@@ -60,6 +64,10 @@ class BooksController < ApplicationController
     private
     def book_params
         params.require(:book).permit(:title, :category, :description, :author_id)
+    end
+
+    def set_book
+      @book = Book.find(params[:id])
     end
 
 end
