@@ -1,21 +1,33 @@
-<%= form_for @book, :html => {:class => "ui form"}  do |f| %>
-    <%= f.label :title %><br>
-    <%= f.text_field :title, class: "field"%><br>
-    <%= f.label :category %><br>
-    <%= f.text_field :category, class: "field" %><br>
-    <%= f.label :description %><br>
-    <%= f.text_area :description,  class: "field" %><br>
-    <%= f.hidden_field :author_id, value: @author.id %>
+<div class="container">
 
-    <%= f.submit "Submit" %>
+
+<%= form_for @book, :html => {:class => "ui form"}  do |f| %>
+    <div class="six wide field">
+      <%= f.label :title %><br>
+      <%= f.text_field :title, class: "field"%><br>
+    </div>
+    <div class="six wide field">
+      <%= f.label :category %><br>
+      <%= f.text_field :category, class: "field" %><br>
+    </div>
+    <div class="ten wide field">
+      <%= f.label :description %><br>
+      <%= f.text_area :description,  class: "field" %><br>
+    </div>
+    <%= f.hidden_field :author_id, value: @author.id %>
+    <div class="six wide field">
+      <%= f.submit "Submit" %>
+    </div>
 <%end%>
+</div>
 <p id="author-id" data-id=<%=@author.id%>></div>
 <% if @book %>
   <p id="book-id" data-id=<%=@book.id%>></div>
 <%end%>
 
-<script type="text/javascript">
 
+
+<script type="text/javascript">
 
 
 
