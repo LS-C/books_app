@@ -14,7 +14,7 @@ button {
 
 .container {
     margin-top: 80px;
-    margin-left: 140px;
+    margin-left: 240px;
 }
 
 body.welcome {
@@ -24,14 +24,18 @@ body.welcome {
 }
 
 
-
 #vertical-menubar {
-  width: 100px !important;
+  width: 200px !important;
+  text-align: center;
 }
 
 
 #edit-form1 {
   display: none;
+}
+
+.field {
+  text-align: left;
 }
 
 .book-img {
@@ -43,8 +47,14 @@ body.welcome {
   margin-left: 40px;
 }
 
-.welcome-client, .welcome-member, .browse-all-books, .sort-book-options, #book-search-bar  {
+.welcome-client, .welcome-member, .browse-all-books, .sort-book-options, #book-search-bar, #add-book-form-box,   {
   text-align: center;
+  margin-left: -240px;
+}
+
+#authors-books {
+  text-align: center;
+  margin-left: -120px;
 }
 
 
@@ -53,26 +63,27 @@ body.welcome {
   font-size: 12px;
 }
 
-#add-book-form-box {
-  text-align: center;
-}
 
 .four.wide.column {
     text-align: center;
  }
 
 .heart.icon {
-  color: red;
+  color: #A60505;
 }
 
 .empty.heart.icon {
   color: grey;
 }
 
+.ui.bottom.attached.button {
+  background-color: #B1A296;
+}
+
 button {
-    background-color: #699DB6;
+    background-color: #EDC7B7;
     border-color: rgba(0,0,0,0.3);
-    color: #FFF;
+    color: black;
 }
 
     a.btn.btn-blue:hover {
@@ -93,4 +104,8 @@ button {
 .book-link {
     font-size: 16px;
     color: #231F20;
+}
+
+#interests-book-btn, #load-scripts-button {
+  background-color: #EDC7B7 !important;
 }

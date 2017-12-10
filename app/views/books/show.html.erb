@@ -32,9 +32,6 @@
 </div>
 
 <button id="edit" name="button">Edit Book</button>
-<button id='test-button' name="button">TESTING</button>
-
-
 
 
   <br>
@@ -64,12 +61,26 @@
         <input value="1" type="hidden" name="book[author_id]" id="book_author_id">
 
         <input id="1" type="submit" name="commit" value="Submit" data-disable-with="Submit">
-        <input id="2"class="destroy" type="submit" value="Delete Book From Inventory">
+        <input id="2" class="destroy" type="submit" value="Delete Book">
+
       </form>
 
     <!-- </script> -->
 
   </div>
+
+    <script id="entry-template" type="text/x-handlebars-template">
+      <div class="entry">
+        <h1>{{title}}</h1>
+        <div class="body">
+          {{body}}
+        </div>
+      </div>
+    </script>
+
+
+
+
 </div>
 
 
@@ -183,6 +194,20 @@ function getPreviousBookId() {
 
 
 
+$('#2').click(function(e) {
+  e.preventDefault()
+  const url = $(this).attr('action')
+
+  $.ajax({
+    method: "DELETE",
+    url: url
+  })
+  .done(function(data) {
+    console.log(data)
+    $('form#edit_book input:submit').prop('disabled',false);
+  })
+  $('#edit-form1').fadeOut('1000')
+})
 
 
 
