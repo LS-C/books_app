@@ -8,7 +8,7 @@ button {
     font-size: 14px;
 }
 
-#all-book-scripts, .ui.card, .book-title, .book-description, .book-author, #interested-books, .book_nav_links {
+#all-book-scripts, .ui.card, .book-title, .book-description, .book-author, #interested-books {
     margin-left: 20px;
 }
 
@@ -103,6 +103,16 @@ button {
 .book-link {
     font-size: 16px;
     color: #231F20;
+}
+
+.book-img{
+    height: 150px;
+    width: 200px;
+    padding-right: 10px;
+}
+
+.book-title {
+  font-size: 20px;
 }
 
 #interests-book-btn, #load-scripts-button {

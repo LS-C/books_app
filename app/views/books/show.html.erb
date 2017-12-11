@@ -2,35 +2,26 @@
 
 
 
-  <div class = "book_nav_links">
-
-    <a href="#" id="next-book-link" style="display: inline">Next</a><br>
-
-    <%= link_to "Profile Page", current_author, style:'display:inline' %><br><br>
-
-  </div>
 
 <div class="ui items">
 <div class="item">
-   <div class="image">
-       <%= image_tag "NY At Night.jpg" %>
+   <div>
+       <%= image_tag "NY At Night.jpg", class: 'book-img'%>
    </div>
    <div class="content">
-     <h2 class="book-title" author_id="<%=@book.author.id%>" prev_book_id="" book_id="<%=@book.id%>" next_book_id="">Title: <%= @book.full_title%></h2>
+     <p class="book-title" author_id="<%=@book.author.id%>" prev_book_id="" book_id="<%=@book.id%>" next_book_id="" style="display: inline"><%= @book.full_title%></p>
      <div class="meta">
-       <p class="book-author">Author: <%= @book.author.first_name%> <%= @book.author.last_name%></p>
-     </div>
+       <p style="display: inline">Author: </p><p class="book-author" style="display: inline"><%= @book.author.first_name%> <%= @book.author.last_name%></p>
+     </div><br>
      <div class="description">
-       <p class="book-category">Category: <%= @book.category%></p>
-       <p class="book-description">Synopsis: <%= @book.description%></p>
-     </div>
-     <div class="extra">
-       Additional Details
+       <p style="display: inline">Category: </p><p class="book-category" style="display: inline"><%= @book.category%></p><br>
+       <p style="display: inline">Description: </p><p class="book-description" style="display: inline"><%= @book.description%></p>
      </div>
    </div>
  </div>
 </div>
 
+<button id="next-book-link" style="display: inline">Next</button>
 <button id="edit" name="button">Edit Book</button>
 
 
