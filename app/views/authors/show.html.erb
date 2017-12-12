@@ -10,7 +10,11 @@
             <% else %>
                 <h2>Welcome <%=@author.email %></h2>
             <%end%>
+            <button id="add-book">Add A New Script</button>
 
+            <div id="add-book-form-box">
+            <div id="book-form"></div>
+          </div>
       </div>
       <br>
       <br>
@@ -50,7 +54,6 @@
           <div class="results"></div>
         </div>
 
-        <button id="add-book">Add A New Script</button>
   </div>
   <br>
 
@@ -62,9 +65,6 @@
 
   </div>
 
-  <div id="add-book-form-box">
-    <div id="book-form"></div>
-  </div>
 
 </div>
 
@@ -309,11 +309,23 @@ function displayCard(data) {
 }
 
 // second
+
+class Book {
+    constructor(attributes) {
+      this.id = attributes.id
+      this.title = attributes.title
+      this.category = attributes.category
+      this.description = attributes.description
+    }
+
+}
+
+
 function log(id) {
     const bookId = id
     posting = $.getJSON('/books/'+bookId)
     posting.done(function(data) {
-      const book = new Item(data)
+      const book = new Book(data)
       const source   = document.getElementById("entry-template").innerHTML;
       const template = Handlebars.compile(source);
       const context = {id: book.id , title: book.title, category: book.category, description: book.description};
@@ -328,31 +340,21 @@ function log(id) {
 }
 
 
+//
+//
+// $.fn.scrollView = function () {
+//   return this.each(function () {
+//     $('html, body').animate({
+//       scrollTop: $('.third').offset().top
+//     });
+//   });
+// }
 
 
-$.fn.scrollView = function () {
-  return this.each(function () {
-    $('html, body').animate({
-      scrollTop: $('.third').offset().top
-    });
-  });
-}
-
-
-class Item {
-    constructor(attributes) {
-      this.id = attributes.id
-      this.title = attributes.title
-      this.category = attributes.category
-      this.description = attributes.description
-    }
-
-}
 
 // third
 
-  $('#next-book-link').click(function(e) {
-    e.preventDefault()
+  $('button#next-book-link').click(function() {
     console.log('clicked')
     $('#edit-form1').fadeOut('fast')
     getNextBookId()
@@ -428,6 +430,24 @@ $('form#edit_book').submit(function(e) {
     syncEditForm(updatedBook)
     $('form#edit_book input:submit').prop('disabled',false);
 
+  })
+  $('#edit-form1').fadeOut('1000')
+})
+
+$('#2').click(function(e) {
+  e.preventDefault()
+  const url = $(this).attr('action')
+
+  $.ajax({
+    method: "DELETE",
+    url: url
+  })
+  .done(function(data) {
+    console.log(url)
+    $('.book-title').text('book is no longer available')
+    $('.book-description').text("")
+    $('.book-category').text("")
+    $('form#edit_book input:submit').prop('disabled',false);
   })
   $('#edit-form1').fadeOut('1000')
 })
