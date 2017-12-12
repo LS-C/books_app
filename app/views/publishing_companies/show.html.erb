@@ -1,7 +1,10 @@
 
 <div class="container">
 
-  <div class="welcome-client" data-id="<%=@publishing_company.id%>">
+  <div class="welcome-container">
+
+
+  <div class="welcome-client" >
     <h1>Welcome <%= @publishing_company.username.capitalize %></h1>
   </div>
 <br>
@@ -14,10 +17,11 @@
 
 
 
-    <button id='interests-book-btn' class="ui heart button">
-      Interested Books
-    </button>
+      <button id='interests-book-btn' data-id="<%=@publishing_company.id%>" class="ui heart button">
+        Interested Books
+      </button>
 
+    </div>
   </div>
 <br>
 <br>
@@ -26,7 +30,7 @@
 <div class="1">
 
 </div>
-<div id="book-card" class="ui grid">
+<div id="book-card1" class="ui grid">
   <div id="all-book-scripts" class="ui cards">
 
 
@@ -39,7 +43,7 @@
 <br>
 <br>
 
-  <div id="book-card" class="ui grid">
+  <div id="book-card2" class="ui grid">
 
     <div id="interested-books" class="ui cards">
 
@@ -52,8 +56,9 @@
 
 <script type="text/javascript">
 
-
-$('#load-scripts-button').click(loadScriptsData)
+$(function() {
+    $('#load-scripts-button').click(loadScriptsData)
+})
 
 function loadScriptsData() {
     $('#interested-books').empty()
@@ -61,78 +66,38 @@ function loadScriptsData() {
 
   }
 
-
-
 $('#interests-book-btn').click(function() {
-  const clientId = $('.welcome-client').attr('data-id')
-  let title;
-  request = $.getJSON('/publishing_companies/'+clientId+'/interests')
-  request.done(function(data) {
-    const books = data
-    const interestedBooks = books.map(book => {
-      return returnCard(book.book)
+  $.getJSON('/publishing_companies/'+ this.dataset.id +'/interests')
+    .done(interests => {
+      const interestedBooks = interests.map(interest => new Book(interest.book).renderCard())
+      $('#all-book-scripts').empty()
+      $('#interested-books').append(interestedBooks)
     })
-    console.log(interestedBooks)
-    $('#all-book-scripts').empty()
-    $('#interested-books').append(interestedBooks)
-  })
 })
 
+class Book {
+  constructor (attributes) {
+    this.title = attributes.title
+    this.category =  attributes.category
+    this.description =  attributes.description
+  }
 
-
-
-    function returnCard(data) {
-      const book = data
-      return `<div class="card">
-          <div class="content">
-            <div class="header">${book.title}</div>
-              <div class="description">
-              ${book.description}
-              </div>
+  renderCard() {
+    return (`
+      <div class="card">
+        <div class="content">
+          <div class="header">${this.title}</div>
+            <div class="description">
+            ${this.description}
             </div>
-            <div class="ui bottom attached button">
-            <i class="mail outline icon"></i>
-            Message Author
           </div>
-        </div>`
-    }
-
-
-
-      // $('#interests-book-btn').click(function() {
-      //   const clientId = $('.welcome-client').attr('data-id')
-      //   console.log(clientId)
-      //   let title;
-      //   request = $.getJSON('/publishing_companies/'+clientId+'/interests')
-      //   request.done(function(data) {
-      //     const books = data
-      //     const interestedBooks = books.map(book => {
-      //       return returnCard(book.book)
-      //     })
-      //     console.log(interestedBooks)
-      //     $('#all-book-scripts').empty()
-      //     $('#interested-books').append(interestedBooks)
-      //   })
-      // })
-
-
-// }
-//
-// function returnCard(data) {
-//   const book = data
-//   return `<div class="card">
-//       <div class="content">
-//         <div class="header">${book.title}</div>
-//           <div class="description">
-//           ${book.description}
-//           </div>
-//         </div>
-//         <div class="ui bottom attached button">
-//         <i class="mail outline icon"></i>
-//         Message Author
-//       </div>
-//     </div>`
-// }
-
+          <div class="ui bottom attached button">
+          <i class="mail outline icon"></i>
+          Message Author
+        </div>
+      </div>
+    `)
+  }
+}
 
 </script>
