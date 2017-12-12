@@ -32,6 +32,11 @@ body.welcome {
 
 #edit-form1 {
   display: none;
+  margin-left: 240px;
+}
+
+.sort-book-options, .book-edits  {
+  display:none;
 }
 
 .field {
@@ -43,18 +48,37 @@ body.welcome {
   width: 400px;
 }
 
-.interested-books-list, #edit-form1 {
+.interested-books-list, #edit-form {
   margin-left: 40px;
 }
 
-.welcome-client, .welcome-member, .browse-all-books, .sort-book-options, #book-search-bar, #add-book-form-box,   {
+.welcome-client, .browse-all-books     {
   text-align: center;
   margin-left: -240px;
 }
 
+
+.welcome-member, #book-show-cards {
+  margin-top: 80px;
+}
+
+#book-showcase {
+  border: black solid 0.01px;
+}
+
+.welcome-member, .sort-book-options, #book-search-bar, #add-book-form-box, #book-show-cards {
+  text-align: center;
+  margin-left: 100px;
+}
+
+#book-sort-dropdown-menu, #book-search-bar {
+  display: inline;
+  margin: 0 auto;
+}
+
 #authors-books {
   text-align: center;
-  margin-left: -120px;
+  margin-left: 240px;
 }
 
 
@@ -117,4 +141,35 @@ button {
 
 #interests-book-btn, #load-scripts-button {
   background-color: #EDC7B7 !important;
+}
+
+.first {
+    width: 100%;
+    height: 1000px;
+    background: #FEFFFF;
+}
+
+.second {
+    width: 100%;
+    height: 1000px;
+    background: #E3E2DF;
+}
+
+.third {
+    width: 100%;
+    height: 1000px;
+    background: #FEFFFF;
+}
+
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
 }

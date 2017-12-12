@@ -33,7 +33,6 @@ class Book < ApplicationRecord
       publishing_company_interested?(publishing_company) ? "heart icon" : "empty heart icon"
     end
 
-    private
     def publishing_company_interested?(publishing_company)
       self.interests.where(publishing_company: publishing_company).any?
     end

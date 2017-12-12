@@ -1,65 +1,159 @@
-<body class="container author">
-  <div class="container">
 
-  <div class="welcome-member">
 
-    <% if @author.first_name %>
-        <h2>Welcome <%=@author.full_name %></h2>
-    <% else %>
-        <h2>Welcome <%=@author.email %></h2>
-    <%end%>
+    <div class="first">
 
+      <div class="welcome-member">
+
+
+            <% if @author.first_name %>
+                <h2>Welcome <%=@author.full_name %></h2>
+            <% else %>
+                <h2>Welcome <%=@author.email %></h2>
+            <%end%>
+
+      </div>
+      <br>
+      <br>
+
+
+
+
+</div>
+
+
+
+<div class="second">
+
+
+  <div class="sort-book-options">
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+
+      <h3>Library</h3>
+
+        <select id="book-sort-dropdown-menu" class="ui search dropdown" >
+          <option value="">Sort By</option>
+          <option value="AZ">Books A-Z</option>
+          <option value="ZA">Books Z-A</option>
+          <option value="AZ">Recent Uploads</option>
+        </select>
+
+        <div id="book-search-bar" class="ui right aligned category search">
+          <div class="ui icon input">
+            <input class="prompt" type="text" placeholder="Search by title/category">
+            <i class="search icon"></i>
+          </div>
+          <div class="results"></div>
+        </div>
+
+        <button id="add-book">Add A New Script</button>
   </div>
   <br>
+
+
+  <br>
   <br>
 
+  <div id="authors-books" data-id="<%=@author.id%>" class="ui cards">
 
-<div class="sort-book-options">
+  </div>
 
-  <button id="script-button">view your scripts</button> <br><br>
-
-    <h3>Your Script Inventory</h3>
-
-      <select id="book-sort-dropdown-menu" class="ui search dropdown"  >
-        <option value="">Sort By</option>
-        <option value="AZ">Books A-Z</option>
-        <option value="ZA">Books Z-A</option>
-        <option value="AZ">Recent Uploads</option>
-      </select>
+  <div id="add-book-form-box">
+    <div id="book-form"></div>
+  </div>
 
 </div>
 
-<br>
-    <div id="book-search-bar" class="ui right aligned category search">
-      <div class="ui icon input">
-        <input class="prompt" type="text" placeholder="Search by title/category">
-        <i class="search icon"></i>
-      </div>
-      <div class="results"></div>
-    </div>
+<div class="third">
+  <br><br><br>
 
-<br>
-<br>
+<div id='book-show-cards'>
 
-<div id="authors-books" data-id="<%=@author.id%>" class="ui cards">
+  <div id='cards'>
+
+
+
+  </div>
+<br>
+<div class="book-edits">
+
+  <button id="next-book-link" style="display: inline">Next</button>
+  <button id="edit" name="button">Edit Book</button>
+
+</div>
+
+  <div class="edit-form" id='edit-form1'>
+
+    <!-- <script id="book-template" type="text/x-handlebars-template"> -->
+
+      <form class="ui form" id="edit_book" action="/books/<%=@book.id%>" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓">
+        <input type="hidden" name="_method" value="patch">
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <div class="six wide field">
+        <label for="book_title">Title</label><br>
+        <input class="field" type="text" value="<%=@book.title%>" name="book[title]" id="book_title"><br>
+        </div>
+        <div class="six wide field">
+        <label for="book_category">Category</label><br>
+        <input class="field" type="text" value="<%=@book.category%>" name="book[category]" id="book_category"><br>
+        </div>
+        <div class="ten wide field">
+        <label for="book_description">Description</label><br>
+        <textarea class="field" name="book[description]" id="book_description" value="<%=@book.description%>"><%=@book.description%></textarea><br>
+        </div>
+        <input value="1" type="hidden" name="book[author_id]" id="book_author_id">
+
+        <input id="1" type="submit" name="commit" value="Submit" data-disable-with="Submit">
+        <input id="2" class="destroy" type="submit" value="Delete Book">
+
+      </form>
+
+    <!-- </script> -->
+
+  </div>
+
+</div>
+
 
 
 </div>
 
-<!-- <div id="new-books">
-</div> -->
-<br>
-<br>
-<br>
-    <div id="add-book-form-box">
-      <button id="add-book">Add A New Script</button>
-      <div id="book-form"></div>
-    </div>
 
-</div>
 <br>
 
-</body>
+
+<script id="entry-template" type="text/x-handlebars-template">
+
+
+    <div id='book-showcase' class="item" data-id={{id}}>
+      <div class="item">
+         <div>
+             <%= image_tag "NY At Night.jpg", class: 'book-img'%>
+         </div>
+         <div class="content">
+           <p class="book-title" author_id='<%= @author.id %>' prev_book_id="" book_id="{{id}}" next_book_id="" style="display: inline">{{title}}</p>
+           <div class="meta">
+             <p style="display: inline">Author: </p><p class="book-author" style="display: inline">AUTHOR</p>
+           </div><br>
+           <div class="description">
+             <p style="display: inline">Category: </p><p class="book-category" style="display: inline">{{category}}</p><br>
+             <p style="display: inline">Description: </p><p class="book-description" style="display: inline">{{description}}</p>
+           </div>
+         </div>
+       </div>
+
+
+</script>
+
+
+
+
+
+
 
 <script type="text/javascript">
 
@@ -81,7 +175,6 @@ function submitForm(e) {
         const values = $(this).serialize()
         posting = $.post('/books', values)
         .done(function(values) {
-            console.log(vaules)
             getCurrentBooks()
             $('form').trigger('reset')
         })
@@ -91,8 +184,6 @@ function submitForm(e) {
 
 $(function() {
 
-
-  $('#script-button').click(getCurrentBooks)
 
   $('.ui.search.dropdown').change(function() {
     const searchOption= ($( ".ui.search.dropdown option:selected").text());
@@ -112,7 +203,6 @@ $(function() {
       } else if (searchOption === "Recent Uploads") {
         sortedBooks = sortBookRecent(books)
       }
-      console.log(sortedBooks)
       const authorBooks = sortedBooks.map(book => {
         title = book.title === "" ? '<em>untitled</em>' : titleCase(book.title)
         return displayCard(book)
@@ -211,15 +301,136 @@ function displayCard(data) {
   const title = book.title === "" ? '<em>untitled</em>' : titleCase(book.title)
   return `<div class="card">
     <div class="content">
-      <div class="header">
-        <a href="/books/${book.id}" class="book-link" >${title}</a>
+      <div class="book_cards">
+          <a href="/books/${book.id}" class="book-link" onclick="log(${book.id}); return false;" >${title}</a>
       </div>
     </div>
   </div>`
 }
 
+// second
+function log(id) {
+    const bookId = id
+    posting = $.getJSON('/books/'+bookId)
+    posting.done(function(data) {
+      const book = new Item(data)
+      const source   = document.getElementById("entry-template").innerHTML;
+      const template = Handlebars.compile(source);
+      const context = {id: book.id , title: book.title, category: book.category, description: book.description};
+      const html = template(context);
+      $('#cards').append(html)
+      $("#authors-books").empty()
+      syncEditForm(book)
+      $(".third").get(0).scrollIntoView({behavior: "smooth"});;
+      $('.book-edits').show()
+      $('.sort-book-options').hide()
+    })
+}
 
 
+
+
+$.fn.scrollView = function () {
+  return this.each(function () {
+    $('html, body').animate({
+      scrollTop: $('.third').offset().top
+    });
+  });
+}
+
+
+class Item {
+    constructor(attributes) {
+      this.id = attributes.id
+      this.title = attributes.title
+      this.category = attributes.category
+      this.description = attributes.description
+    }
+
+}
+
+// third
+
+  $('#next-book-link').click(function(e) {
+    e.preventDefault()
+    console.log('clicked')
+    $('#edit-form1').fadeOut('fast')
+    getNextBookId()
+    const nextBookId = parseInt($('.book-title').attr('book_id'))
+    const authorId = $('.book-title').attr('author_id')
+    bookData = $.getJSON('/authors/'+authorId+'/book_data')
+    bookData.done(function(data) {
+      const authorData = data
+      const books = authorData["books"]
+      const nextBook = books.find( book => {
+        return book.id === nextBookId
+      })
+      bookShowCard(nextBook)
+      syncEditForm(nextBook)
+      nextBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text(nextBook.description)
+      $('.book-author').html(authorData.first_name + " " +authorData.last_name)
+      $('form#edit_book').attr('action',"/books/"+ nextBook.id )
+
+    })
+  })
+
+
+
+function bookShowCard(book) {
+    book.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(titleCase(book.title))
+    book.description ==="" ? $('.book-description').text('need category') :   $('.book-description').text(book.description)
+    book.category ==="" ? $('.book-category').text('need category') :   $('.book-category').text(titleCase(book.category))
+}
+
+function syncEditForm(book) {
+    $('input#book_title').val(book.title)
+    $('textarea#book_description').val(book.description)
+    $('input#book_category').val(book.category)
+}
+
+
+function getNextBookId() {
+  const bookId = parseInt($('.book-title').attr('book_id'))
+  const authorId = $('.book-title').attr('author_id')
+  console.log(authorId)
+  bookData = $.getJSON('/authors/'+authorId+'book_data')
+  bookData.done(function(data) {
+    const authorData = data.books
+    const justBookIds= authorData.map( book => {
+        return book.id
+    })
+    const currentBookIndex = justBookIds.indexOf(bookId)
+    const nextBookId = justBookIds[currentBookIndex + 1]
+    $('.book-title').attr('book_id', nextBookId)
+    })
+}
+
+$('#edit').click(function() {
+  // $('#edit-form1').css({ display: 'block' })
+  $('#edit-form1').fadeIn('1000')
+})
+
+
+
+$('form#edit_book').submit(function(e) {
+  e.preventDefault()
+  const url = $(this).attr('action')
+  const params = $(this).serialize()
+
+  $.ajax({
+    method: "patch",
+    url: url,
+    data: params
+  })
+  .done(function(data) {
+    const updatedBook = data
+    bookShowCard(updatedBook)
+    syncEditForm(updatedBook)
+    $('form#edit_book input:submit').prop('disabled',false);
+
+  })
+  $('#edit-form1').fadeOut('1000')
+})
 
 
 </script>

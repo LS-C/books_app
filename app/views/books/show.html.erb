@@ -60,15 +60,6 @@
 
   </div>
 
-    <script id="entry-template" type="text/x-handlebars-template">
-      <div class="entry">
-        <h1>{{title}}</h1>
-        <div class="body">
-          {{body}}
-        </div>
-      </div>
-    </script>
-
 
 
 
@@ -131,8 +122,8 @@ $(function() {
       })
       bookShowCard(nextBook)
       syncEditForm(nextBook)
-      nextBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text("Synopsis: "+ nextBook.description)
-      $('.book-author').html('<em>Author: </em>'+ authorData.first_name + " " +authorData.last_name)
+      nextBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text(nextBook.description)
+      $('.book-author').html(authorData.first_name + " " +authorData.last_name)
       $('form#edit_book').attr('action',"/books/"+ nextBook.id )
 
     })
@@ -141,9 +132,9 @@ $(function() {
 
 
 function bookShowCard(book) {
-    book.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(book.title)
+    book.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(titleCase(book.title))
     book.description ==="" ? $('.book-description').text('need category') :   $('.book-description').text(book.description)
-    book.category ==="" ? $('.book-category').text('need category') :   $('.book-category').text(book.category)
+    book.category ==="" ? $('.book-category').text('need category') :   $('.book-category').text(titleCase(book.category))
 }
 
 function syncEditForm(book) {
@@ -194,52 +185,24 @@ $('#2').click(function(e) {
     url: url
   })
   .done(function(data) {
-    console.log(data)
+    $('.book-title').text('book is no longer available')
+    $('.book-description').text("")
+    $('.book-category').text("")
     $('form#edit_book input:submit').prop('disabled',false);
   })
   $('#edit-form1').fadeOut('1000')
 })
 
+function titleCase(title) {
+  if (title.indexOf(' ') === -1) {
+    return title.charAt(0).toUpperCase()+title.slice(1)
+  } else{
+    return title.split(" ").map( word => { return word.charAt(0).toUpperCase()+word.slice(1) }).join(" ")
+  }
+}
 
 
-//
-//   $('#interested-book-link').click(function(e) {
-//     e.preventDefault()
-//     getNextInterestedBookId()
-//     const nextBookId = parseInt($('.book-title').attr('book_id'))
-//     const company_id = $('.interested-books-list').attr('data-id')
-//     const authorId = $('.book-title').attr('author_id')
-//     bookData = $.getJSON('/publishing_companies/'+company_id+'/interests')
-//     bookData.done(function(data) {
-//       const authorData = data
-//       const books = authorData.map( book => {
-//         return book.book
-//       })
-//       const nextBook = books.find( book => {
-//         return book.id === nextBookId
-//       })
-//       nextBook.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(nextBook.title)
-//       nextBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text("Synopsis: "+ nextBook.description)
-//       $('.book-author').html('<em>Author: </em>'+ authorData.first_name + " " +authorData.last_name)
-//     })
-//   })
-//
-//   function getNextInterestedBookId() {
-//     const bookId = parseInt($('.book-title').attr('book_id'))
-//     const company_id = $('.interested-books-list').attr('data-id')
-//     bookData = $.getJSON('/publishing_companies/'+company_id+'/interests')
-//     bookData.done(function(data) {
-//       const books = data
-//       const justBookIds= books.map( book => {
-//           return book.id
-//       })
-//       console.log(justBookIds)
-//       const currentBookIndex = justBookIds.indexOf(bookId)
-//       const nextBookId = justBookIds[currentBookIndex + 1]
-//       $('.book-title').attr('book_id', nextBookId)
-//   })
-// }
-//
+
 
 
 </script>
