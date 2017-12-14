@@ -4,7 +4,7 @@
   <div class="welcome-member">
 
     <% if @author.first_name %>
-        <h2>Welcome <%=@author.full_name %></h2>
+        <h2><%=@author.full_name %></h2>
     <% else %>
         <h2>Welcome <%=@author.email %></h2>
     <%end%>
