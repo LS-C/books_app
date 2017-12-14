@@ -1,18 +1,33 @@
-<%= form_for @book do |f| %>
-    <%= f.label :title %><br>
-    <%= f.text_field :title %><br>
-    <%= f.label :category %><br>
-    <%= f.text_field :category %><br>
-    <%= f.label :description %><br>
-    <%= f.text_area :description %><br>
-    <%= f.hidden_field :author_id, value: @author.id %>
+<div class="container">
 
-    <%= f.submit "Submit" %>
+
+<%= form_for @book, :html => {:class => "ui form"}  do |f| %>
+    <div class="six wide field">
+      <%= f.label :title %><br>
+      <%= f.text_field :title, class: "field"%><br>
+    </div>
+    <div class="six wide field">
+      <%= f.label :category %><br>
+      <%= f.text_field :category, class: "field" %><br>
+    </div>
+    <div class="ten wide field">
+      <%= f.label :description %><br>
+      <%= f.text_area :description,  class: "field" %><br>
+    </div>
+    <%= f.hidden_field :author_id, value: @author.id %>
+    <div class="six wide field">
+      <%= f.submit "Submit" %>
+    </div>
 <%end%>
+</div>
 <p id="author-id" data-id=<%=@author.id%>></div>
+<% if @book %>
+  <p id="book-id" data-id=<%=@book.id%>></div>
+<%end%>
+
+
 
 <script type="text/javascript">
-
 
 
 
@@ -24,31 +39,45 @@
 function submitForm(e) {
         e.preventDefault()
         const id = $('#author-id').attr('data-id')
-        console.log('this is working here')
+        const bookId = $('#book-id').attr('data-id')
+        let url;
+        let method;
+
+        if (bookId==="") {
+          url = '/books'
+          method = 'post'
+        } else {
+          url = `/books/${bookId}`
+          method = 'patch'
+        }
+
         const values = $(this).serialize()
-        console.log(values)
-        posting = $.post('/books', values)
-        .done(function(values) {
-            getNewBooks()
+
+        $.ajax({
+          method: method,
+          url: url,
+          data: values,
+          dataType: "json"
+        })
+        .done(function(data) {
+          const updatedBook = data
+          if (method==='post') {
+            const book = displayCard(updatedBook)
+            $("#authors-books").append(book)
             $('form').trigger('reset')
             $('#book-form').empty()
-        })
-        console.log('done')
+
+          } else {
+            updatedBook.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text("Title: " + updatedBook.title)
+            updatedBook.category ==="" ? $('.book-category').text('untitled') :   $('.book-category').text("Category: " + updatedBook.category)
+            updatedBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text("Synopsis: "+ updatedBook.description)
+            $('.field').val("")
+            $('form').hide()
+          }
+        });
 }
 
 
-function getNewBooks() {
-    const id = $('#author-id').attr('data-id')
-    let title;
-    posting = $.getJSON('/authors/'+id+'book_data', function(data) {
-        const book = data["books"]
-        const newBook = book[book.length-1]["title"]
-        title = titleCase(newBook)
-        console.log(title)
-        const id = book[book.length-1]["id"]
-        $("#authors-books").append(`<div class="four wide column"><a href="/books/${id}" class="book-link">`+title+'</a></div><br/>')
-      })
-}
 
 
 function titleCase(title) {
@@ -58,5 +87,19 @@ function titleCase(title) {
     return title.split(" ").map( word => { return word.charAt(0).toUpperCase()+word.slice(1) }).join(" ")
   }
 }
+
+
+function displayCard(data) {
+  const book = data
+  const title = book.title === "" ? '<em>untitled</em>' : titleCase(book.title)
+  return `<div class="card">
+    <div class="content">
+      <div class="header">
+        <a href="/books/${book.id}" class="book-link" >${title}</a>
+      </div>
+    </div>
+  </div>`
+}
+
 
 </script>

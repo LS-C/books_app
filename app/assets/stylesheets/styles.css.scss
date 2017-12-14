@@ -1,6 +1,7 @@
 body {
-    margin-top: 40px;
+  margin-top: 40px;
 }
+
 
 button {
     height: 30px;
@@ -9,63 +10,80 @@ button {
 
 #all-book-scripts, .ui.card, .book-title, .book-description, .book-author, #interested-books {
     margin-left: 20px;
-    font-family: 'Libre Franklin', sans-serif;
 }
 
 .container {
     margin-top: 80px;
-    margin-left: 40px;
+    margin-left: 240px;
 }
 
 body.welcome {
      background-image: url('george-peabody-library.jpg');
      background-repeat: no-repeat;
      background-size: cover;
-}
-
-.welcome-message {
-  font-family: 'Libre Franklin', sans-serif;
-  color: #FEFFF1;
+     background-position: 4em;
 }
 
 
+#vertical-menubar {
+  width: 200px !important;
+  text-align: center;
+}
+
+
+#edit-form1 {
+  display: none;
+}
+
+.field {
+  text-align: left;
+}
 
 .book-img {
-  height: 200px;
+  height: 200p;
+  width: 400px;
 }
 
-.book_nav_links {
+.interested-books-list, #edit-form1 {
   margin-left: 40px;
 }
 
-.welcome-client, .welcome-member, .browse-all-books, .sort-book-options {
+.welcome-client, .welcome-member, .browse-all-books, .sort-book-options, #book-search-bar, #add-book-form-box,   {
   text-align: center;
+  margin-left: -240px;
 }
 
-// #add-book-form-box {
-//   float: right;
-//   margin-right: 400px;
-// }
+#authors-books {
+  text-align: center;
+  margin-left: -120px;
+}
 
-#book-sort-dropdown-menu {
+
+#book-sort-dropdown-menu, #book-search-bar {
   height: 25px !important;
   font-size: 12px;
-}
-
-#add-book-form-box {
-  text-align: center;
 }
 
 .four.wide.column {
     text-align: center;
  }
 
+.heart.icon {
+  color: #A60505;
+}
+
+.empty.heart.icon {
+  color: grey;
+}
+
+.ui.bottom.attached.button {
+  background-color: #B1A296;
+}
 
 button {
-    background-color: #699DB6;
+    background-color: #EDC7B7;
     border-color: rgba(0,0,0,0.3);
-    text-shadow: 0 1px 0 rgba(0,0,0,0.5);
-    color: #FFF;
+    color: black;
 }
 
     a.btn.btn-blue:hover {
@@ -86,4 +104,49 @@ button {
 .book-link {
     font-size: 16px;
     color: #231F20;
+}
+
+.book-img{
+    height: 150px;
+    width: 200px;
+    padding-right: 10px;
+}
+
+.book-title {
+  font-size: 20px;
+}
+
+#book-card1, #book-card2 {
+  margin-left: 60px;
+}
+
+.welcome-container {
+  margin-left: 60px;
+}
+
+
+#interests-book-btn, #load-scripts-button {
+  background-color: #EDC7B7 !important;
+}
+
+
+.btns {
+  position: fixed;;
+  top: 1rem;
+  left: 1rem;
+}
+
+.section {
+  width: 100%;
+  height: 100vh;
+  line-height: 100vh;
+  text-align: center;
+
+  &:nth-child(even) {
+    background: #eee;
+  }
+
+  &:nth-child(odd) {
+    background: #ccc;
+  }
 }

@@ -1,56 +1,126 @@
 <div class="container">
 
-  <div>
+
 
 
 <div class="ui items">
 <div class="item">
-   <div class="image">
-     <%= image_tag "Books.jpg", class: 'book-img' %>
+   <div>
+       <%= image_tag "NY At Night.jpg", class: 'book-img'%>
    </div>
    <div class="content">
-      <h2 class="book-title" author_id="<%=@book.author.id%>" book_id="<%=@book.id%>" next_book_id="">Title: <%= @book.full_title%></h2>
+     <p class="book-title" author_id="<%=@book.author.id%>" prev_book_id="" book_id="<%=@book.id%>" next_book_id="" style="display: inline"><%= @book.full_title%></p>
      <div class="meta">
-       <p class="book-author">Author: <%= @book.author.first_name%> <%= @book.author.last_name%></p>
-     </div>
+       <p style="display: inline">Author: </p><p class="book-author" style="display: inline"><%= @book.author.first_name%> <%= @book.author.last_name%></p>
+     </div><br>
      <div class="description">
-       <p class="book-description">Synopsis: <%= @book.description%></p>
-     </div>
-     <div class="extra">
-       Additional Details
+       <p style="display: inline">Category: </p><p class="book-category" style="display: inline"><%= @book.category%></p><br>
+       <p style="display: inline">Description: </p><p class="book-description" style="display: inline"><%= @book.description%></p>
      </div>
    </div>
  </div>
 </div>
 
+<button id="next-book-link" style="display: inline">Next</button>
+<button id="edit" name="button">Edit Book</button>
 
-</div>
 
-</div>
-<br>
-<br>
-<br>
+  <br>
+  <br>
 
-<% if current_author %>
-  <div class = "book_nav_links">
-    <a href="#" id="next-book-link" >Next</a><br>
-    <%= link_to "Profile Page", current_author %>
+
+
+  <div class="edit-form" id='edit-form1'>
+
+    <!-- <script id="book-template" type="text/x-handlebars-template"> -->
+
+      <form class="ui form" id="edit_book" action="/books/<%=@book.id%>" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓">
+        <input type="hidden" name="_method" value="patch">
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <div class="six wide field">
+        <label for="book_title">Title</label><br>
+        <input class="field" type="text" value="<%=@book.title%>" name="book[title]" id="book_title"><br>
+        </div>
+        <div class="six wide field">
+        <label for="book_category">Category</label><br>
+        <input class="field" type="text" value="<%=@book.category%>" name="book[category]" id="book_category"><br>
+        </div>
+        <div class="ten wide field">
+        <label for="book_description">Description</label><br>
+        <textarea class="field" name="book[description]" id="book_description" value="<%=@book.description%>"><%=@book.description%></textarea><br>
+        </div>
+        <input value="1" type="hidden" name="book[author_id]" id="book_author_id">
+
+        <input id="1" type="submit" name="commit" value="Submit" data-disable-with="Submit">
+        <input id="2" class="destroy" type="submit" value="Delete Book">
+
+      </form>
+
+    <!-- </script> -->
+
   </div>
-<% else %>
-  <div class="interested-books-list" data=id= <%=current_publishing_company.id%> ></div>
-  <a href="#" id="interested-book-link" >Next Book</a><br>
-<%end%>
+
+    <script id="entry-template" type="text/x-handlebars-template">
+      <div class="entry">
+        <h1>{{title}}</h1>
+        <div class="body">
+          {{body}}
+        </div>
+      </div>
+    </script>
+
+
+
+
+</div>
+
+
+
 
 
 
 
 <script type="text/javascript">
 
+$(function() {
+
+  getNextBookId()
+
+})
+
+    $('#edit').click(function() {
+      // $('#edit-form1').css({ display: 'block' })
+      $('#edit-form1').fadeIn('1000')
+    })
+
+
+
+    $('form#edit_book').submit(function(e) {
+      e.preventDefault()
+      const url = $(this).attr('action')
+      const params = $(this).serialize()
+
+      $.ajax({
+        method: "patch",
+        url: url,
+        data: params
+      })
+      .done(function(data) {
+        const updatedBook = data
+        bookShowCard(updatedBook)
+        syncEditForm(updatedBook)
+        $('form#edit_book input:submit').prop('disabled',false);
+
+      })
+      $('#edit-form1').fadeOut('1000')
+    })
+
+
   $('#next-book-link').click(function(e) {
     e.preventDefault()
+    $('#edit-form1').fadeOut('fast')
     getNextBookId()
     const nextBookId = parseInt($('.book-title').attr('book_id'))
-    console.log(nextBookId)
     const authorId = $('.book-title').attr('author_id')
     bookData = $.getJSON('/authors/'+authorId+'/book_data')
     bookData.done(function(data) {
@@ -59,13 +129,28 @@
       const nextBook = books.find( book => {
         return book.id === nextBookId
       })
-      nextBook.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(nextBook.title)
+      bookShowCard(nextBook)
+      syncEditForm(nextBook)
       nextBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text("Synopsis: "+ nextBook.description)
       $('.book-author').html('<em>Author: </em>'+ authorData.first_name + " " +authorData.last_name)
+      $('form#edit_book').attr('action',"/books/"+ nextBook.id )
+
     })
   })
 
 
+
+function bookShowCard(book) {
+    book.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(book.title)
+    book.description ==="" ? $('.book-description').text('need category') :   $('.book-description').text(book.description)
+    book.category ==="" ? $('.book-category').text('need category') :   $('.book-category').text(book.category)
+}
+
+function syncEditForm(book) {
+    $('input#book_title').val(book.title)
+    $('textarea#book_description').val(book.description)
+    $('input#book_category').val(book.category)
+}
 
 
 function getNextBookId() {
@@ -83,49 +168,78 @@ function getNextBookId() {
     })
 }
 
-
-  $('#interested-book-link').click(function(e) {
-    e.preventDefault()
-    getNextInterestedBookId()
-    const nextBookId = parseInt($('.book-title').attr('book_id'))
-    console.log(nextBookId)
-    const authorId = $('.book-title').attr('author_id')
-    bookData = $.getJSON('/authors/'+authorId+'/book_data')
-    bookData.done(function(data) {
-      const authorData = data
-      const books = authorData["books"]
-      const nextBook = books.find( book => {
-        return book.id === nextBookId
-      })
-      nextBook.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(nextBook.title)
-      nextBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text("Synopsis: "+ nextBook.description)
-      $('.book-author').html('<em>Author: </em>'+ authorData.first_name + " " +authorData.last_name)
+function getPreviousBookId() {
+  const bookId = parseInt($('.book-title').attr('book_id'))
+  const authorId = $('.book-title').attr('author_id')
+  bookData = $.getJSON('/authors/'+authorId+'book_data')
+  bookData.done(function(data) {
+    const authorData = data.books
+    const justBookIds= authorData.map( book => {
+        return book.id
     })
-  })
-
-  function getNextInterestedBookId() {
-    const bookId = parseInt($('.book-title').attr('book_id'))
-    const company_id = $('.interested-books-list').attr('data-id')
-    bookData = $.getJSON('/publishing_companies/'+company_id+'/interests')
-    bookData.done(function(data) {
-      console.log
-      // const authorData = data.books
-      // const justBookIds= authorData.map( book => {
-      //     return book.id
-      // })
-      // const currentBookIndex = justBookIds.indexOf(bookId)
-      // const nextBookId = justBookIds[currentBookIndex + 1]
-      // $('.book-title').attr('book_id', nextBookId)
-      // })
-  })
+    const currentBookIndex = justBookIds.indexOf(bookId)
+    const nextBookId = justBookIds[currentBookIndex - 1]
+    $('.book-title').attr('book_id', nextBookId)
+    })
 }
 
 
 
+$('#2').click(function(e) {
+  e.preventDefault()
+  const url = $(this).attr('action')
+
+  $.ajax({
+    method: "DELETE",
+    url: url
+  })
+  .done(function(data) {
+    console.log(data)
+    $('form#edit_book input:submit').prop('disabled',false);
+  })
+  $('#edit-form1').fadeOut('1000')
+})
 
 
 
-
+//
+//   $('#interested-book-link').click(function(e) {
+//     e.preventDefault()
+//     getNextInterestedBookId()
+//     const nextBookId = parseInt($('.book-title').attr('book_id'))
+//     const company_id = $('.interested-books-list').attr('data-id')
+//     const authorId = $('.book-title').attr('author_id')
+//     bookData = $.getJSON('/publishing_companies/'+company_id+'/interests')
+//     bookData.done(function(data) {
+//       const authorData = data
+//       const books = authorData.map( book => {
+//         return book.book
+//       })
+//       const nextBook = books.find( book => {
+//         return book.id === nextBookId
+//       })
+//       nextBook.title ==="" ? $('.book-title').text('untitled') :   $('.book-title').text(nextBook.title)
+//       nextBook.description ==="" ? $('.book-description').text('Not scripted yet') : $('.book-description').text("Synopsis: "+ nextBook.description)
+//       $('.book-author').html('<em>Author: </em>'+ authorData.first_name + " " +authorData.last_name)
+//     })
+//   })
+//
+//   function getNextInterestedBookId() {
+//     const bookId = parseInt($('.book-title').attr('book_id'))
+//     const company_id = $('.interested-books-list').attr('data-id')
+//     bookData = $.getJSON('/publishing_companies/'+company_id+'/interests')
+//     bookData.done(function(data) {
+//       const books = data
+//       const justBookIds= books.map( book => {
+//           return book.id
+//       })
+//       console.log(justBookIds)
+//       const currentBookIndex = justBookIds.indexOf(bookId)
+//       const nextBookId = justBookIds[currentBookIndex + 1]
+//       $('.book-title').attr('book_id', nextBookId)
+//   })
+// }
+//
 
 
 </script>

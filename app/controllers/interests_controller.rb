@@ -14,10 +14,7 @@ class InterestsController < ApplicationController
     def new
     end
 
-    # def create
-    #     @interest = Interest.create(interest_params)
-    #       render json: @interest
-    # end
+
 
     private
     def interest_params

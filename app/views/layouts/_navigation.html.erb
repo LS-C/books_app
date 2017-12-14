@@ -1,31 +1,79 @@
-
-
-<div class="ui top fixed menu">
+<!-- <div id="vertical-menubar" class="ui left fixed vertical menu" >
   <div class="item">
     <i id="nav-logo" class="world icon"></i>
   </div>
-    <a href="/" class="item">Home </a>
+  <a href="/" class="item">Home </a>
+    <% if !signed_in? %>
+      <a href="/publishing_companies/sign_in" class="item">Clients Sign-in</a>
+      <a href="/authors/sign_in" class="item">Members Sign-in</a>
+    <%end%>
 
 
+
+    <% if signed_in? %>
+        <% if current_author %>
+          <%= link_to current_author do %>
+          <i class="item">Profile</i>
+          <%end%>
+        <% else %>
+          <%= link_to current_publishing_company do %>
+          <i class="item">Profile</i>
+          <%end%>
+        <%end%>
+        <%= link_to(destroy_author_session_path, :method=>'delete') do %>
+            <i class="item">Logout</i>
+        <% end %>
+    <% end%>
+</div> -->
+
+
+
+<div id="vertical-menubar" class="ui left fixed vertical menu">
   <% if !signed_in? %>
+  <div class="header item">
     <a href="/publishing_companies/sign_in" class="item">Clients Sign-in</a>
     <a href="/authors/sign_in" class="item">Members Sign-in</a>
-  <%end%>
+  </div>
+  <a class="item">
+    About Us
+  </a>
+  <a class="item">
+    Jobs
+  </a>
+  <%else%>
+  <div class="header item">
+    Products
+  </div>
 
+  <div class="item">
+    Library
+    <div class="menu">
+      <% if current_author %>
+        <a class="item">Books Inventory</a>
+        <a class="item">Member Companies</a>
+        <a class="item">Messages</a>
+        <%= link_to current_author do %>
+          <p class="item">Profile</p>
+        <%end%>
 
-
-  <% if signed_in? %>
-      <%= link_to @current_user do %>
-        <i class="item">Profile</i>
-      <%end%>
-      <%= link_to(destroy_author_session_path, :method=>'delete') do %>
-          <i class="item">Logout</i>
+      <% else  %>
+        <%= link_to current_publishing_company do %>
+          <p class="item">Account</p>
+        <%end%>
+        <a class="item">Authors</a>
+        <a class="item">Books</a>
       <% end %>
-  <% end%>
+    </div>
+  </div>
+  <a href="/" class="item">
+    About Us
+  </a>
+  <a class="item">
+    Jobs
+  </a>
+  <%= link_to(destroy_author_session_path, :method=>'delete') do %>
+  <p class="item">Logout</p>
+  <% end %>
 
-
-</div>
-
-<p></p>
-<p></p>
+  <%end%>
 </div>

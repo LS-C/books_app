@@ -60,12 +60,10 @@
 
     $('.more-script-info').click(function() {
         const id = $(this).parent().attr('data-id');
-        posting = $.getJSON('/books/'+id+'.json', function(data) {
-          const book = data
-          $(`.book-${id}-desciption`).text(data["description"])
+        posting = $.getJSON('/books/'+id+'.json', function(book) {
+          $(`.book-${id}-desciption`).text(book.description)
         })
     })
-
 
     $('.interest-link').click(function(e) {
       e.stopPropagation()
@@ -77,15 +75,11 @@
         method: 'POST',
         url: url,
         dataType: 'json',
-        success: function(data) {
-          const newInterest = data["heart_class"]
-          $heart.attr('class', newInterest)
-          $('#book-'+bookId+'-interests-message').html(data["interests_message"])
+        success: function({ heart_class, interests_message }) {
+          $heart.attr('class', heart_class)
+          $(`#book-${bookId}-interests-message`).html(interests_message)
         }
       })
     })
-
-
-
 
 </script>
