@@ -128,3 +128,25 @@ button {
 #interests-book-btn, #load-scripts-button {
   background-color: #EDC7B7 !important;
 }
+
+
+.btns {
+  position: fixed;;
+  top: 1rem;
+  left: 1rem;
+}
+
+.section {
+  width: 100%;
+  height: 100vh;
+  line-height: 100vh;
+  text-align: center;
+
+  &:nth-child(even) {
+    background: #eee;
+  }
+
+  &:nth-child(odd) {
+    background: #ccc;
+  }
+}
